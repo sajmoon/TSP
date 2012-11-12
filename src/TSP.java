@@ -1,4 +1,6 @@
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -22,15 +24,13 @@ public class TSP {
 	public static void main(String[] args) {
 		// TODO Krama Jens
 		try{
-			
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
 			
 			String inLine = in.readLine();
-			int numberOfPoints = Integer.parseInt(inLine);
+			int size = Integer.parseInt(inLine);
 			
-			World w = new World(numberOfPoints);
-			
+			World w = new World(size);
 			
 			while (in.ready()) {
 				String s = in.readLine();
