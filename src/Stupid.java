@@ -1,5 +1,5 @@
 
-public class Stupid {
+public class Stupid implements Algorithm {
 
 	int size;
 	public Stupid(World w) {
