@@ -91,6 +91,10 @@ public class World {
 		return nearest;
 	}
 	
+	public double getDistanceTo (int from, int to){
+		return matrix[from][to];
+	}
+	
 	public int getSize (){
 		return size;
 	}
