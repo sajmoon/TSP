@@ -3,11 +3,13 @@ public class World {
 	double[][] positions;
 	double[][] matrix;
 	int nextIndex;
+	int size;
 	
 	public World(int size) {
 		positions = new double[size][2];
 		matrix = new double[size][size];
 		nextIndex = 1;
+		this.size = size;
 	}
 	
 	public void add(double x, double y) {
@@ -39,5 +41,20 @@ public class World {
 				System.out.println("[i][j] " + matrix[i][j]);
 			}
 		}
+	}
+	
+	public int getNearestCity (int city){
+		double shortestDist = Double.MAX_VALUE;
+		int nearest = 0;
+		for (int i=0;i<size;i++){
+			if (i == city)
+				continue;
+			double dist = matrix[city][i];
+			if (dist < shortestDist){
+				shortestDist = dist;
+				nearest = i;
+			}
+		}
+		return nearest;
 	}
 }
