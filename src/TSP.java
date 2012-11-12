@@ -40,6 +40,7 @@ public class TSP {
 			}
 			
 			Algorithm algo = new NearestNeighbour(w);
+//			Algorithm algo = new RandomStupid(w);
 			
 			int[] answer = algo.solve();
 			
