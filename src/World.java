@@ -68,5 +68,24 @@ public class World {
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         return Double.valueOf(twoDForm.format(d));
 	}
+	
+	public int getNearestCity (int city, boolean[] visited){
+		double shortestDist = Double.MAX_VALUE;
+		int nearest = 0;
+		for (int i=0;i<size;i++){
+			if (i == city)
+				continue;
+			double dist = matrix[city][i];
+			if (dist < shortestDist && !visited[i]){
+				shortestDist = dist;
+				nearest = i;
+			}
+		}
+		return nearest;
+	}
+	
+	public int getSize (){
+		return size;
+	}
 }
 
