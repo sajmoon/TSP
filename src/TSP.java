@@ -23,6 +23,8 @@ public class TSP {
 		// TODO Krama Jens
 		try{
 			
+			World w = new World();
+			
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			
 			String inLine = in.readLine();
@@ -31,21 +33,10 @@ public class TSP {
 			while (in.ready()) {
 				String s = in.readLine();
 				String[] a = s.split(" ");
-				System.out.println("X: " + a[0] + " y: " + a[1]);
+				
+				w.add(Float.parseFloat(a[0]), Float.parseFloat(a[1]));
 			}
-			 
-			ArrayList<String> integers = new ArrayList<String> ();
-			String numberString;
-			while (in.ready()){
-				numberString = in.readLine();
-				integers.add(numberString);
-			}
-	
-			String[] toFactor = new String[integers.size()];
-			for (int i=0;i<integers.size();i++){
-				toFactor[i] = integers.get(i);
-			}
-
+			
 		} catch (Exception e){
 			e.printStackTrace();
 		}
