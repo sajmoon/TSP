@@ -25,6 +25,7 @@ public class TSP {
 			
 			World w = new World();
 			
+			
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			
 			String inLine = in.readLine();
@@ -36,6 +37,10 @@ public class TSP {
 				
 				w.add(Float.parseFloat(a[0]), Float.parseFloat(a[1]));
 			}
+			
+			Algorithm algo = new Greedy(w);
+			
+			int[] answer = algo.solve();
 			
 		} catch (Exception e){
 			e.printStackTrace();
