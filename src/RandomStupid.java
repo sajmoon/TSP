@@ -21,10 +21,11 @@ public class RandomStupid implements Algorithm {
 			list.add(i);
 		}
 		
+		Random rn = new Random();
+		
 		for (int i = 0; i < size; i++) {
-			Random rn = new Random();
 			
-			int random = rn.nextInt() % list.size(); 
+			int random = rn.nextInt(list.size()); 
 			int value = list.get(random);
 			list.remove(random);
 			answer[i] = value;
