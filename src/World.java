@@ -7,6 +7,8 @@ public class World {
 	int nextIndex;
 	int size;
 	
+	static final boolean DEBUG = false;
+	
 	public World(int inputSize) {
 		size = inputSize;
 		positions = new double[size][2];
@@ -34,16 +36,18 @@ public class World {
 	}
 	
 	public void printSolution(int[] answer) {
+		if(DEBUG){
 		printWorldPositions();
 		printWorldMatrix();
-		
-		System.out.println("\nSolution..");
+		}
 		for (int i = 0; i < answer.length; i++) {
-			
+			System.out.println (answer[i]);
 		}
 	}
 	
 	public void printWorldPositions() {
+		if (!DEBUG)
+			return;
 		System.out.println("All positions in the wooooorld");
 		for (int i = 0; i < size; i++) {
 			System.out.println("pos: " + positions[i][0] + ", " + positions[i][1]);
@@ -51,6 +55,8 @@ public class World {
 	}
 	
 	public void printWorldMatrix() {
+		if (!DEBUG)
+			return;
 		System.out.println("Matrix of the wooorld");
 		for (int i = 0; i < size; i++) {
 			System.out.println("");
@@ -65,8 +71,9 @@ public class World {
 	}
 	
 	double round(double d) {
-        DecimalFormat twoDForm = new DecimalFormat("#.##");
-        return Double.valueOf(twoDForm.format(d));
+//        DecimalFormat twoDForm = new DecimalFormat("#.##");
+//        return Double.valueOf(twoDForm.format(d));
+		return d;
 	}
 	
 	public int getNearestCity (int city, boolean[] visited){

@@ -24,8 +24,8 @@ public class TSP {
 	public static void main(String[] args) {
 		// TODO Krama Jens
 		try{
-//			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//			BufferedReader in = new BufferedReader(new FileReader(new File("C:\\indata.txt")));
 			
 			String inLine = in.readLine();
 			int size = Integer.parseInt(inLine);
