@@ -51,7 +51,7 @@ public class World {
 	}
 	
 	public void printWorldMatrix() {
-		System.out.println("Matrix of the wooorl");
+		System.out.println("Matrix of the wooorld");
 		for (int i = 0; i < size; i++) {
 			System.out.println("");
 			for (int j = 0; j < size; j++) {
