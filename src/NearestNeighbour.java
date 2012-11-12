@@ -1,11 +1,11 @@
 
-public class Greedy implements Algorithm {
+public class NearestNeighbour implements Algorithm {
 	
 	World w;
 	boolean[] visited;
 	int size;
 
-	public Greedy(World w) {
+	public NearestNeighbour(World w) {
 		this.w = w;
 		size = w.getSize ();
 		visited = new boolean[size];

@@ -39,7 +39,7 @@ public class TSP {
 				w.add(Double.parseDouble(a[0]), Double.parseDouble(a[1]));
 			}
 			
-			Algorithm algo = new Greedy(w);
+			Algorithm algo = new NearestNeighbour(w);
 			
 			int[] answer = algo.solve();
 			
