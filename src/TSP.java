@@ -23,25 +23,27 @@ public class TSP {
 		// TODO Krama Jens
 		try{
 			
-			World w = new World();
-			
 			
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			
 			String inLine = in.readLine();
 			int numberOfPoints = Integer.parseInt(inLine);
 			
+			World w = new World(numberOfPoints);
+			
+			
 			while (in.ready()) {
 				String s = in.readLine();
 				String[] a = s.split(" ");
 				
-				w.add(Float.parseFloat(a[0]), Float.parseFloat(a[1]));
+				w.add(Double.parseDouble(a[0]), Double.parseDouble(a[1]));
 			}
 			
 			Algorithm algo = new Greedy(w);
 			
 			int[] answer = algo.solve();
 			
+			w.printSolution(answer);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
