@@ -24,6 +24,7 @@ public class TSP {
 	public static void main(String[] args) {
 		// TODO Krama Jens
 		long startTime = System.currentTimeMillis();
+		long cuttOfTime = 1500;
 		try{
 //			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
@@ -44,15 +45,21 @@ public class TSP {
 			
 			int[] answer = algo.solve();
 			
-			printWorldDistance(answer, w);
+//			printWorldDistance(answer, w);
 			
 			Optimization opt = new twoOpt();
 			
-			System.out.println("After optimizations");
+//			System.out.println("After optimizations");
+			int i = 0;
+			while ( (System.currentTimeMillis() - startTime) < cuttOfTime ) {
+				i++;
+				
+				answer = opt.optimize(w, answer, System.currentTimeMillis() - startTime);
+			}
 			
-			answer = opt.optimize(w, answer, System.currentTimeMillis() - startTime);
+//			System.out.println("time left: " + (i));
 			
-			printWorldDistance(answer, w);
+//			printWorldDistance(answer, w);
 			
 			w.printSolution(answer);
 		} catch (Exception e){

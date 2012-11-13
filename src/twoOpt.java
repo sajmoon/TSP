@@ -17,10 +17,10 @@ public class twoOpt implements Optimization {
 			newLength += w.getDistanceTo(answer[i+2], answer[i+1]);
 			newLength += w.getDistanceTo(answer[i+1], answer[i+3]);
 			
-			System.out.println("orig: " + originalLength + " new: " + newLength );
+//			System.out.println("orig: " + originalLength + " new: " + newLength );
 			
 			if (Double.compare(newLength, originalLength) < 0 ) {
-				System.out.println("do the switch");
+//				System.out.println("do the switch");
 				int tmp = answer[i+1]; 
 				answer[i+1] = answer[i+2];
 				answer[i+2] = tmp;
