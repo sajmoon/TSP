@@ -23,9 +23,10 @@ public class TSP {
 	 */
 	public static void main(String[] args) {
 		// TODO Krama Jens
+		long startTime = System.currentTimeMillis();
 		try{
-			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-//			BufferedReader in = new BufferedReader(new FileReader(new File("C:\\indata.txt")));
+//			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
 			
 			String inLine = in.readLine();
 			int size = Integer.parseInt(inLine);
@@ -40,14 +41,31 @@ public class TSP {
 			}
 			
 			Algorithm algo = new NearestNeighbour(w);
-//			Algorithm algo = new RandomStupid(w);
 			
 			int[] answer = algo.solve();
+			
+			printWorldDistance(answer, w);
+			
+			Optimization opt = new twoOpt();
+			
+			System.out.println("After optimizations");
+			
+			answer = opt.optimize(w, answer, System.currentTimeMillis() - startTime);
+			
+			printWorldDistance(answer, w);
 			
 			w.printSolution(answer);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	public static void printWorldDistance(int[] answer, World w) {
+		double totDistance = 0;
+		for (int i = 0; i < answer.length-1; i++) {
+			totDistance += w.getDistanceTo(answer[i], answer[i+1]);
+		}
+		System.out.println("Total distance: " + totDistance);
 	}
 
 }
