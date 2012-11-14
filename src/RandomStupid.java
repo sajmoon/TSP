@@ -1,18 +1,15 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RandomStupid implements Algorithm {
+public class RandomStupid extends Algorithm {
 
 	int size;
 	boolean[] visited;
-
-	public RandomStupid(World w) {
+	
+	@Override
+	public int[] solve(World w) {
 		size = w.getSize();
 		visited = new boolean[size];
-	}
-
-	@Override
-	public int[] solve() {
 		
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		int[] answer = new int[size];

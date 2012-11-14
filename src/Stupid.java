@@ -1,12 +1,10 @@
 
-public class Stupid implements Algorithm {
+public class Stupid extends Algorithm {
 
 	int size;
-	public Stupid(World w) {
-		size = w.getSize ();
-	}
 	
-	public int[] solve() {
+	public int[] solve(World w) {
+		size = w.getSize ();
 		int[] answer = new int[size];
 		for (int i = 0; i < size; i++) {
 			answer[i] = i;

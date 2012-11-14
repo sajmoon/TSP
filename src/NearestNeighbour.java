@@ -1,17 +1,14 @@
 
-public class NearestNeighbour implements Algorithm {
+public class NearestNeighbour extends Algorithm {
 	
 	World w;
 	boolean[] visited;
 	int size;
-
-	public NearestNeighbour(World w) {
+	
+	public int[] solve(World w) {
 		this.w = w;
 		size = w.getSize ();
 		visited = new boolean[size];
-	}
-	
-	public int[] solve() {
 		int[] ret = new int[size];
 		int numVisited = 0;
 		int currentCity = 0;
