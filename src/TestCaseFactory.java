@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
@@ -13,8 +15,8 @@ import javax.swing.JOptionPane;
 public class TestCaseFactory {
 	
 	static final int SCALE_FACTOR = 5;
-	
-	final static String FILE_NAME_BASE = "C:\\Users\\Jens\\Desktop\\Dropbox\\Eclipseprojekt\\TSP\\testcases\\";
+	final static String sep = System.getProperty ("file.separator");
+	final static String FILE_NAME_BASE = "testcases"+Utils.sep;
 	final static String GRAPH_DB = FILE_NAME_BASE+"graphs";
 	
 	public static void main (String[] args){
@@ -50,23 +52,50 @@ public class TestCaseFactory {
 		return new GraphFile (size, options[1], file);
 	}
 	
+	public static void removeGraphFromDb (GraphFile gf){
+	    try {
+		File dbFile = new File (GRAPH_DB);
+		File temp = new File (GRAPH_DB+"_temp");
+		BufferedReader br = new BufferedReader(new FileReader(dbFile));
+		PrintWriter pw = new PrintWriter(new FileWriter(temp));
+		String lineToRemove = gf.name+" "+gf.size+" "+gf.file.getAbsolutePath ();
+		String line = "";
+		while ((line = br.readLine()) != null) {
+	        
+	        if (!line.trim().equals(lineToRemove)) {
+	          pw.println(line);
+	          pw.flush();
+	        }
+	      }
+	      pw.close();
+	      br.close();
+	      dbFile.delete ();
+	      temp.renameTo (dbFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
-	
-	public static ArrayList<GraphFile> getSavedTestCases () throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader (new File (GRAPH_DB)));
+	public static Vector<GraphFile> getSavedTestCases () throws IOException{
+		File graphDb = new File (GRAPH_DB);
+		if (!graphDb.exists ())
+			return new Vector<GraphFile> ();
+		BufferedReader reader = new BufferedReader(new FileReader (graphDb));
 		ArrayList<String> graphs = new ArrayList<String> ();
 		while (reader.ready ()){
 			graphs.add (reader.readLine ());
 		}
-		ArrayList<GraphFile> graphFiles = new ArrayList<GraphFile> ();
+		Vector<GraphFile> graphFiles = new Vector<GraphFile> ();
 		for (String s : graphs){
 			String[] parts = s.split (" ");
-			graphFiles.add (new GraphFile (Integer.parseInt (parts[0]), parts[1], new File(parts[2])));
+			graphFiles.add (new GraphFile (Integer.parseInt (parts[1]), parts[0], new File(parts[2])));
 		}
+		reader.close ();
 		return graphFiles;
 	}
 	
-	private static void addFileToFileList (GraphFile gf) throws IOException {
+	public static void addFileToFileList (GraphFile gf) throws IOException {
 		File graphDb = new File (GRAPH_DB);
 		if (!graphDb.exists ())
 			graphDb.createNewFile ();
@@ -75,7 +104,7 @@ public class TestCaseFactory {
 		writer.close ();
 	}
 	
-	private static void writeGraph (GraphFile gf) throws IOException{
+	public static void writeGraph (GraphFile gf) throws IOException{
 		Random r = new Random ();
 		BufferedWriter out = new BufferedWriter (new FileWriter(gf.file));
 		out.write (""+gf.size+"\n");

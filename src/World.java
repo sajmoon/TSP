@@ -3,6 +3,8 @@ public class World {
 	double[][] matrix;
 	int nextIndex;
 	int size;
+	double largestX = 0;
+	double largestY = 0;
 	
 	static final boolean DEBUG = false;
 	
@@ -14,6 +16,10 @@ public class World {
 	}
 	
 	public void add(double x, double y) {
+		if (x > largestX)
+			largestX = x;
+		if (y > largestY)
+			largestY = y;
 		positions[nextIndex][0] = x;
 		positions[nextIndex][1] = y;
 		
@@ -102,6 +108,18 @@ public class World {
 	
 	public int getSize (){
 		return size;
+	}
+	
+	public double[][] getPositions (){
+		return positions;
+	}
+	
+	public double getWidth (){
+		return largestX;
+	}
+	
+	public double getHeight (){
+		return largestY;
 	}
 }
 

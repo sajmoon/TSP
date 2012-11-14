@@ -11,4 +11,8 @@ public class GraphFile {
 			name = n;
 			file = f;
 		}
+		@Override
+		public String toString (){
+			return name+" ("+size+")";
+		}
 	}

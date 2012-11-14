@@ -2,6 +2,7 @@
 public class Utils {
 
 	static final boolean DEBUG = true;
+	final static String sep = System.getProperty ("file.separator");
 
 	public static void printAnswer (int[] answer){
 		for (int i = 0; i < answer.length; i++) {
