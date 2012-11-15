@@ -1,4 +1,5 @@
 
+
 public class NearestNeighbour extends Algorithm {
 	
 	World w;

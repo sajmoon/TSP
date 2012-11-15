@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,34 +9,48 @@ public class Greedy extends Algorithm{
 
 	World w;
 	int size;
+	double width;
+	double height;
 	
 	@Override
 	public int[] solve (World w) {
 		this.w = w;
 		this.size = w.getSize ();
-		int[] ret = new int[size];
-		ArrayList<Edge> edges = new ArrayList<Edge>();
-		HashSet<Edge> added = new HashSet<Edge> ();
-		for (int i=0;i<size;i++){
-			for (int j=0;j<size;j++){
-				Edge e = new Edge (i,j, w.getDistanceTo (i, j));
-				if (i != j && !added.contains (e)){
-					edges.add (e);
-					added.add (e);
-				}
-			}
-		}
-
-		//Main loop
+		width = w.getWidth ();
+		height = w.getHeight ();
+		
+		ArrayList<Edge> edges = addEdges ();
 		Collections.sort (edges);
 		Graph g = new Graph (size);
 		int checkedEdges=0;
+		//Main loop
 		while (g.addedEdges < size){
 			Edge cur = edges.get (checkedEdges);
 			//If it does not violate graph rules, then
 			g.addEdge (cur);
+//			edges.remove (checkedEdges);
 			checkedEdges++;
 		}
+		return getAnswer (g);
+	}
+	
+	private ArrayList<Edge> addEdges (){
+		ArrayList<Edge> edges = new ArrayList<Edge> (); 
+		for (int i=0;i<size;i++){
+			for (int j=0;j<=i;j++){
+				double dist = w.getDistanceTo (i, j);
+				Edge e = new Edge (i,j, dist);
+				if (i != j){ 
+					edges.add (e);
+				}
+			}
+		}
+		return edges;
+	}
+
+	
+	private int[] getAnswer (Graph g){
+		int[] ret = new int[size];
 		ret[0] = 0;
 		int lastEdge = 0;
 		int curEdge = g.getEdgeFrom (0, -1);
@@ -48,7 +63,7 @@ public class Greedy extends Algorithm{
 		return ret;
 	}
 
-	private class Edge implements Comparable<Edge>{
+	private static final class Edge implements Comparable<Edge>{
 		public int from,to;
 		public double dist;
 

@@ -1,3 +1,5 @@
+
+
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
@@ -138,18 +140,19 @@ public class VisualSalesman extends JFrame{
 	private void drawAnswer (int[] answer, World w, String name) {
 		clearCanvas ();
 		drawMap (w, name, true);
+		Color lineColor = Color.RED;
 		for (int i=0;i<answer.length-1;i++){
 			int from = answer[i];
 			int to = answer[i+1];
-			drawLineBetween (from, to);
+			drawLineBetween (from, to, lineColor);
 		}
 		
-		drawLineBetween (answer[answer.length-1], answer[0]);
+		drawLineBetween (answer[answer.length-1], answer[0], lineColor);
 	}
 	
-	private void drawLineBetween (int from, int to){
+	private void drawLineBetween (int from, int to, Color paintColor){
 		Color tmp = g.getColor ();
-		g.setColor (Color.RED);
+		g.setColor (paintColor);
 		int fromX = drawnPositions[from][0];
 		int fromY = drawnPositions[from][1];
 		int toX = drawnPositions[to][0];
@@ -166,14 +169,18 @@ public class VisualSalesman extends JFrame{
 		drawnPositions = calculatePositions (w);
 		for (int i=0;i<w.getSize ();i++){
 			int x = drawnPositions[i][0]; int y = drawnPositions[i][1];
-			char[] c = {'o'};
-			g.drawChars (c, 0, c.length, x, y);
+			drawCityAt (x,y);
 			
 		}
 		currentlyDrawnMap = name;
 		
 	}
 	
+	private void drawCityAt (int x, int y) {
+		g.drawOval (x, y, 3, 3);
+		
+	}
+
 	/*
 	 * Recalculate positions in graph to pixel positions in canvas
 	 */

@@ -1,4 +1,6 @@
 
+
+
 public class Stupid extends Algorithm {
 
 	int size;
