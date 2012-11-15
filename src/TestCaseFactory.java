@@ -31,11 +31,16 @@ public class TestCaseFactory {
 	}
 	
 	public static GraphFile askAndCreateGraphFile (){
-
-		try {
 		String format = JOptionPane.showInputDialog ("Input format: graphdimensions filename");
 		String[] options = format.split (" ");
-		int size = Integer.parseInt (options[0]);
+		if (options.length < 2)
+			return null;
+		int size = -1;
+		try{
+			size = Integer.parseInt (options[0]);
+		} catch (NumberFormatException e){
+			return null;
+		}
 		File fileFolder = new File (FILE_NAME_BASE);
 		if (!fileFolder.exists ())
 			fileFolder.mkdirs ();
@@ -46,6 +51,7 @@ public class TestCaseFactory {
 			fullFileName = FILE_NAME_BASE + fileName;
 			file = new File(fullFileName);
 		}
+		try {
 			file.createNewFile ();
 		} catch (IOException e) {
 			e.printStackTrace();
