@@ -47,7 +47,7 @@ public class Insertion extends Algorithm{
 			list.add(addAfter, bestCity);
 			visited[bestCity] = true;
 			
-			if (list.size() >= 3)
+			if (list.size() >= world.size)
 				break;
 		}
 		
