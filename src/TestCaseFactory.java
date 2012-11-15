@@ -31,6 +31,8 @@ public class TestCaseFactory {
 	}
 	
 	public static GraphFile askAndCreateGraphFile (){
+
+		try {
 		String format = JOptionPane.showInputDialog ("Input format: graphdimensions filename");
 		String[] options = format.split (" ");
 		int size = Integer.parseInt (options[0]);
@@ -44,7 +46,6 @@ public class TestCaseFactory {
 			fullFileName = FILE_NAME_BASE + fileName;
 			file = new File(fullFileName);
 		}
-		try {
 			file.createNewFile ();
 		} catch (IOException e) {
 			e.printStackTrace();

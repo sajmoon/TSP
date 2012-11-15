@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,44 +12,49 @@ public class Greedy extends Algorithm{
 	int size;
 	double width;
 	double height;
-	
+
 	@Override
 	public int[] solve (World w) {
 		this.w = w;
 		this.size = w.getSize ();
 		width = w.getWidth ();
 		height = w.getHeight ();
-		
-		ArrayList<Edge> edges = addEdges ();
-		Collections.sort (edges);
+
+		Edge[] edges = addEdges ();
+		Arrays.sort (edges);
 		Graph g = new Graph (size);
 		int checkedEdges=0;
 		//Main loop
 		while (g.addedEdges < size){
-			Edge cur = edges.get (checkedEdges);
+			Edge cur = edges[checkedEdges];
 			//If it does not violate graph rules, then
 			g.addEdge (cur);
-//			edges.remove (checkedEdges);
+			//			edges.remove (checkedEdges);
 			checkedEdges++;
 		}
 		return getAnswer (g);
 	}
-	
-	private ArrayList<Edge> addEdges (){
-		ArrayList<Edge> edges = new ArrayList<Edge> (); 
+
+	private Edge[] addEdges (){
+		int numEdges = sumTo (size-1);
+		Edge[] edges = new Edge[numEdges];
+		int edgeIndex = 0;
 		for (int i=0;i<size;i++){
-			for (int j=0;j<=i;j++){
+			for (int j=0;j<i;j++){
 				double dist = w.getDistanceTo (i, j);
 				Edge e = new Edge (i,j, dist);
-				if (i != j){ 
-					edges.add (e);
-				}
+				edges[edgeIndex] = e;
+				edgeIndex++;
 			}
 		}
 		return edges;
 	}
 
-	
+	private int sumTo (int num){
+		return ((num *(num+1)) / 2);
+	}
+
+
 	private int[] getAnswer (Graph g){
 		int[] ret = new int[size];
 		ret[0] = 0;
@@ -75,7 +81,7 @@ public class Greedy extends Algorithm{
 		public Edge getReverse(){
 			return new Edge (to, from, dist);
 		}
-		
+
 		@Override
 		public int compareTo (Edge o) {
 			if (o.dist > dist)
@@ -85,7 +91,7 @@ public class Greedy extends Algorithm{
 			return 0;
 
 		}
-		
+
 		@Override
 		public boolean equals (Object eO){
 			if (!(eO instanceof Edge))
@@ -97,7 +103,7 @@ public class Greedy extends Algorithm{
 				return true;
 			return false;
 		}
-		
+
 		@Override
 		public int hashCode (){
 			return (from*to)+(from+to);
@@ -176,22 +182,22 @@ public class Greedy extends Algorithm{
 		}
 
 	}
-	
+
 	private class Node {
 		private ArrayList<Edge> edges = new ArrayList<Edge> ();
-		
+
 		public void addEdge (Edge e){
 			edges.add (e);
 		}
-		
+
 		public int degree (){
 			return edges.size ();
 		}
-		
+
 		public ArrayList<Edge> getEdges (){
 			return edges;
 		}
-		
+
 		public Edge getEdgeExludeDestination (int exclude){
 			for (Edge e : edges){
 				if (e.to != exclude)
