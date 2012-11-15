@@ -1,3 +1,5 @@
+
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,11 +14,12 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 
 
+
 public class TestCaseFactory {
 	
 	static final int SCALE_FACTOR = 5;
 	final static String sep = System.getProperty ("file.separator");
-	final static String FILE_NAME_BASE = "testcases"+Utils.sep;
+	final static String FILE_NAME_BASE = "testcases"+System.getProperty ("file.separator");
 	final static String GRAPH_DB = FILE_NAME_BASE+"graphs";
 	
 	public static void main (String[] args){
@@ -24,7 +27,7 @@ public class TestCaseFactory {
 		try {
 			writeGraph (gf);
 			addFileToFileList (gf);
-			TSP.runSolverAndPrintToConsoleWithDistance (TSP.algorithms[0], new BufferedReader(new FileReader(gf.file)));
+//			TSP.runSolverAndPrintToConsoleWithDistance (TSP.algorithms[0], new BufferedReader(new FileReader(gf.file)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,9 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 
 
 public class Greedy extends Algorithm{
@@ -19,7 +17,6 @@ public class Greedy extends Algorithm{
 		this.size = w.getSize ();
 		width = w.getWidth ();
 		height = w.getHeight ();
-
 		Edge[] edges = addEdges ();
 		Arrays.sort (edges);
 		Graph g = new Graph (size);

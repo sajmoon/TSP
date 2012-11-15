@@ -1,8 +1,7 @@
-
-
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,20 +9,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,14 +31,19 @@ import javax.swing.event.ListSelectionListener;
 
 public class VisualSalesman extends JFrame{
 	private static final long serialVersionUID = 1L;
-	public static final String THUMB_DIR = "images"+Utils.sep;
+	public static final String THUMB_DIR = "images"+ System.getProperty ("file.separator");
 	public static final String DEFAULT_THUMB = THUMB_DIR+"defaultThumb.bmp";
 	
-	JComboBox<Algorithm> algoChooser;
-	JList<GraphFile> graphList;
+	JComboBox algoChooser;
+	JList graphList;
 	Canvas canvas;
 	Graphics g;
+	JLabel distanceLabel;
+	JLabel nameLabel;
+	JLabel oldDistanceLabel;
+	JLabel oldNameLabel;
 	Vector<GraphFile> graphs;
+	
 	
 	String currentlyDrawnMap = "";
 	int[][] drawnPositions;
@@ -94,8 +99,8 @@ public class VisualSalesman extends JFrame{
 
 			@Override
 			public void actionPerformed (ActionEvent e) {
-				Algorithm chosenAlgo = algoChooser.getItemAt (algoChooser.getSelectedIndex ());
-				GraphFile gf = graphList.getSelectedValue ();
+				Algorithm chosenAlgo = (Algorithm) algoChooser.getItemAt (algoChooser.getSelectedIndex ());
+				GraphFile gf = (GraphFile) graphList.getSelectedValue ();
 				runSolution (chosenAlgo, gf);
 
 			}
@@ -118,11 +123,56 @@ public class VisualSalesman extends JFrame{
 		graphButtons.setLayout (new BoxLayout (graphButtons, BoxLayout.X_AXIS));
 		graphButtons.add (generateGraphButton);
 		graphButtons.add (removeGraphButton);
+		
+		JPanel resultsPanel = getResultTextPane ();
+		
 		eastPanel.add (listPane);
 		eastPanel.add (graphButtons);
 		eastPanel.add (algoPanel);
-		this.add (eastPanel, BorderLayout.EAST);
+		eastPanel.add (resultsPanel);
+		
+		
+		JPanel eastContainer = new JPanel ();
+		eastContainer.setLayout (new BorderLayout ());
+		eastContainer.add (eastPanel);
+		eastContainer.add (resultsPanel, BorderLayout.SOUTH);
+		this.add (eastContainer, BorderLayout.EAST);
 
+	}
+	
+	private JPanel getResultTextPane (){
+		
+		JLabel oldTitle = new JLabel ();
+		oldTitle.setText ("Senaste lösningen");
+		
+		JLabel newTitle = new JLabel ();
+		newTitle.setText ("Lösning");
+		
+		distanceLabel = new JLabel ();
+		distanceLabel.setText ("    ");
+		
+		nameLabel = new JLabel ();
+		nameLabel.setText ("   ");
+		
+		oldDistanceLabel = new JLabel ();
+		oldDistanceLabel.setText ("    ");
+		
+		oldNameLabel = new JLabel ();
+		oldNameLabel.setText ("    ");
+		
+		JPanel resultsPanel = new JPanel ();
+		resultsPanel.setLayout (new BoxLayout (resultsPanel, BoxLayout.Y_AXIS));
+		
+		resultsPanel.add (newTitle);
+		resultsPanel.add (distanceLabel);
+		resultsPanel.add (nameLabel);
+		
+		resultsPanel.add (oldTitle);
+		resultsPanel.add (oldDistanceLabel);
+		resultsPanel.add (oldNameLabel);
+		
+		return resultsPanel;
+		
 	}
 
 	private void runSolution (Algorithm chosenAlgo, GraphFile gf) {
@@ -148,8 +198,22 @@ public class VisualSalesman extends JFrame{
 		}
 		
 		drawLineBetween (answer[answer.length-1], answer[0], lineColor);
+		updateResultTexts (Utils.getAnswerDistance (answer, w));
 	}
 	
+	private void updateResultTexts (double answerDistance) {
+		String distString = "Total distance "+answerDistance;
+		distString = distString.substring (0, distString.indexOf ('.')+2);
+		Algorithm algo = (Algorithm) algoChooser.getSelectedItem ();
+		String algoName = algo.toString ();
+		oldDistanceLabel.setText (distanceLabel.getText ());
+		oldNameLabel.setText (nameLabel.getText ());
+		
+		distanceLabel.setText (distString);
+		nameLabel.setText (algoName+" | "+currentlyDrawnMap);
+		
+	}
+
 	private void drawLineBetween (int from, int to, Color paintColor){
 		Color tmp = g.getColor ();
 		g.setColor (paintColor);
@@ -222,6 +286,10 @@ public class VisualSalesman extends JFrame{
 		public void actionPerformed (ActionEvent e) {
 			try {
 				GraphFile gf = TestCaseFactory.askAndCreateGraphFile ();
+				if (gf == null){
+					JOptionPane.showMessageDialog (((Component) e.getSource ()).getParent (), "Invalid format");
+					return;
+				}
 				TestCaseFactory.writeGraph (gf);
 				TestCaseFactory.addFileToFileList (gf);
 				graphs.add(gf);
@@ -235,7 +303,7 @@ public class VisualSalesman extends JFrame{
 	private class RemoveButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed (ActionEvent e) {
-			GraphFile gf = graphList.getSelectedValue ();
+			GraphFile gf = (GraphFile) graphList.getSelectedValue ();
 			removeFile (gf.file);
 			updateGraphDb (gf);
 			graphs.remove (gf);
@@ -262,7 +330,7 @@ public class VisualSalesman extends JFrame{
 			if (e.getValueIsAdjusting ()){
 				return;
 			}
-			GraphFile gf = graphList.getSelectedValue ();
+			GraphFile gf = (GraphFile) graphList.getSelectedValue ();
 			if (gf.name.equals (currentlyDrawnMap))
 				return;
 			World w = TSP.makeWorld (new BufferedReader (new FileReader (gf.file)));

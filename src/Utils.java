@@ -2,7 +2,6 @@
 public class Utils {
 
 	static final boolean DEBUG = true;
-	final static String sep = System.getProperty ("file.separator");
 
 	public static void printAnswer (int[] answer){
 		for (int i = 0; i < answer.length; i++) {
@@ -12,6 +11,12 @@ public class Utils {
 
 	public static double printAnswerAndDistance (int[] answer, World w){
 		printAnswer (answer);
+		double totalDistance = getAnswerDistance (answer, w);
+		System.out.println ("Total distance: "+totalDistance);
+		return totalDistance;
+	}
+	
+	public static double getAnswerDistance (int[] answer, World w){
 		double totalDistance = 0;
 		int back = 0;
 		int front = 0;
@@ -23,7 +28,6 @@ public class Utils {
 			}
 			totalDistance+= w.getDistanceTo (back, front);
 		}
-		System.out.println ("Total distance: "+totalDistance);
 		return totalDistance;
 	}
 
