@@ -54,6 +54,14 @@ public class World {
 		return length;
 	}
 	
+	public double getDistanceIn(int[] answer, int start, int end) {
+		int dist = 0;
+		for (int i = start; i < end; i++) {
+			dist += this.getDistanceTo(i,i+1);
+		}
+		return dist;
+	}
+	
 	public void printWorldPositions() {
 		if (!DEBUG)
 			return;
