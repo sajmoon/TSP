@@ -93,7 +93,7 @@ public class VisualSalesman extends JFrame{
 		this.add (canvasPanel, BorderLayout.WEST);
 
 		JPanel algoPanel = new JPanel ();
-		algoChooser = new JComboBox<Algorithm> (algorithms);
+		algoChooser = new JComboBox (algorithms);
 		JButton runSolverButton = new JButton ("Solve");
 		runSolverButton.addActionListener (new ActionListener (){
 
@@ -111,7 +111,7 @@ public class VisualSalesman extends JFrame{
 		JPanel eastPanel = new JPanel ();
 		eastPanel.setLayout (new BoxLayout (eastPanel, BoxLayout.Y_AXIS));
 		JScrollPane listPane = new JScrollPane ();
-		graphList = new JList<GraphFile> (graphs);
+		graphList = new JList (graphs);
 		graphList.getSelectionModel ().addListSelectionListener (new GraphListListener ());
 		listPane.setViewportView (graphList);
 		
@@ -143,10 +143,10 @@ public class VisualSalesman extends JFrame{
 	private JPanel getResultTextPane (){
 		
 		JLabel oldTitle = new JLabel ();
-		oldTitle.setText ("Senaste lösningen");
+		oldTitle.setText ("Senaste lï¿½sningen");
 		
 		JLabel newTitle = new JLabel ();
-		newTitle.setText ("Lösning");
+		newTitle.setText ("Lï¿½sning");
 		
 		distanceLabel = new JLabel ();
 		distanceLabel.setText ("    ");

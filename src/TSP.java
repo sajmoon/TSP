@@ -111,20 +111,20 @@ public class TSP {
 
 			World w = makeWorld (in);
 			int[] answer = algo.solve(w);
-
-			return optimizeResult(answer, w);
+			
+			Optimization opt = new twoOpt();
+			return optimizeResult(opt, answer, w);
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static int[] optimizeResult(int[] answer, World w) {
-		Optimization opt = new twoOpt();
+	public static int[] optimizeResult(Optimization opt, int[] answer, World w) {
 		
-		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {
+//		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {
 			answer = opt.optimize(w, answer, System.currentTimeMillis() - startTime);
-		}
+//		}
 		
 		return answer;
 	}
