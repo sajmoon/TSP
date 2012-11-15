@@ -9,7 +9,7 @@ public class TSP {
 	public static long startTime;
 	public static long cutoffTime;
 
-	public static final Algorithm[] algorithms = {new Greedy(), new NearestNeighbour(), new RandomStupid ()};
+	public static final Algorithm[] algorithms = {new Insertion(), new Greedy(), new NearestNeighbour(), new RandomStupid ()};
 
 	/**
 	 * Sample input

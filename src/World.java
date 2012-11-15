@@ -95,6 +95,7 @@ public class World {
 //        return Double.valueOf(twoDForm.format(d));
 		return d;
 	}
+	
 	public int getNearestCity (int city, boolean[] visited){
 		double shortestDist = Double.MAX_VALUE;
 		int nearest = 0;
