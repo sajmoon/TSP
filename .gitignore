@@ -7,6 +7,6 @@
 .classpath
 .project
 
-# Test files #
-testcases/*
-images/*
+# Test folders #
+testcases
+images
