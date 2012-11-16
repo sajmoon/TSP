@@ -8,6 +8,17 @@ public class Utils {
 			System.out.println (answer[i]);
 		}
 	}
+	
+	public static boolean answerHasDuplicates (int[] answer){
+		boolean[] checked = new boolean[answer.length];
+		for (int i=0;i<answer.length;i++){
+			int node = answer[i];
+			if (checked[node])
+				return true;
+			checked[node] = true;
+		}
+		return false;
+	}
 
 	public static double printAnswerAndDistance (int[] answer, World w){
 		printAnswer (answer);

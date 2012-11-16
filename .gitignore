@@ -6,3 +6,7 @@
 *.ear
 .classpath
 .project
+
+# Test files #
+testcases/*
+images/*
