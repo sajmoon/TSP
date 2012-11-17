@@ -43,8 +43,12 @@ public class VisualSalesman extends JFrame{
 	JLabel oldDistanceLabel;
 	JLabel oldNameLabel;
 	Vector<GraphFile> graphs;
+	JComboBox optimizerChooser;
 
-
+	World w;
+	GraphFile gf;
+	int[] answer;
+	
 	String currentlyDrawnMap = "";
 	int[][] drawnPositions;
 
@@ -73,7 +77,7 @@ public class VisualSalesman extends JFrame{
 			if (!thumbDir.exists ())
 				thumbDir.mkdirs ();
 			graphs = TestCaseFactory.getSavedTestCases ();
-			buildGui (graphs, TSP.algorithms);
+			buildGui (graphs, TSP.algorithms, TSP.optimizations);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +87,7 @@ public class VisualSalesman extends JFrame{
 
 	}
 
-	private void buildGui (Vector<GraphFile> graphs, Algorithm[] algorithms){
+	private void buildGui (Vector<GraphFile> graphs, Algorithm[] algorithms, Optimization opts[]){
 		this.setLayout (new BorderLayout ());
 		JPanel canvasPanel = new JPanel ();
 		canvas = new Canvas ();
@@ -100,13 +104,29 @@ public class VisualSalesman extends JFrame{
 			@Override
 			public void actionPerformed (ActionEvent e) {
 				Algorithm chosenAlgo = (Algorithm) algoChooser.getItemAt (algoChooser.getSelectedIndex ());
-				GraphFile gf = (GraphFile) graphList.getSelectedValue ();
+				gf = (GraphFile) graphList.getSelectedValue ();
 				runSolution (chosenAlgo, gf);
 
 			}
 		});
 		algoPanel.add (algoChooser);
 		algoPanel.add (runSolverButton);
+		
+		JPanel optPanel = new JPanel ();
+		optimizerChooser = new JComboBox (opts);
+		JButton runOptimizerButton = new JButton ("Optimize once");
+		
+		runOptimizerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Optimization o = (Optimization) optimizerChooser.getItemAt(optimizerChooser.getSelectedIndex());
+				runOptimization(o);
+			}
+		});
+		
+		
+		optPanel.add(optimizerChooser);
+		optPanel.add(runOptimizerButton);
 
 		JPanel eastPanel = new JPanel ();
 		eastPanel.setLayout (new BoxLayout (eastPanel, BoxLayout.Y_AXIS));
@@ -129,6 +149,7 @@ public class VisualSalesman extends JFrame{
 		eastPanel.add (listPane);
 		eastPanel.add (graphButtons);
 		eastPanel.add (algoPanel);
+		eastPanel.add (optPanel);
 		eastPanel.add (resultsPanel);
 
 
@@ -176,10 +197,20 @@ public class VisualSalesman extends JFrame{
 	}
 
 	private void runSolution (Algorithm chosenAlgo, GraphFile gf) {
-		World w;
+		
 		try {
 			w = TSP.makeWorld (new BufferedReader(new FileReader(gf.file)));
-			int[] answer = TSP.solveForWorld (chosenAlgo, w);
+			answer = TSP.solveForWorld (chosenAlgo, w);
+			drawAnswer (answer, w, gf.name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	private void runOptimization (Optimization opt) {
+		try {
+			answer = TSP.optimizeResult(opt, answer, w);
 			drawAnswer (answer, w, gf.name);
 		} catch (Exception e) {
 			e.printStackTrace();

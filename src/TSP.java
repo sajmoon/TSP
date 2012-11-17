@@ -8,8 +8,10 @@ import java.io.InputStreamReader;
 public class TSP {
 	public static long startTime;
 	public static long cutoffTime;
+	
 
 	public static final Algorithm[] algorithms = {new Insertion(), new Greedy(), new NearestNeighbour(), new RandomStupid ()};
+	public static final Optimization[] optimizations = { new twoOpt() };
 
 	/**
 	 * Sample input
