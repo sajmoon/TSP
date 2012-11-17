@@ -6,7 +6,10 @@ public class twoOpt implements Optimization {
 	public int[] optimize(World w, int[] answer, long timeLeft) {
 		
 		int[] newAnswer = new int[answer.length];
-		for (int i = 0; i < answer.length-2; i++) {
+		int newI = 0, newJ = 0;
+		double bestLenght = 0;
+		
+		for (int i = 0; i < (answer.length-2); i++) {
 			newAnswer[i] = answer[i];
 			for (int j = i+2; j < answer.length-2; j++) {
 				double originalLength = 0;
@@ -19,21 +22,25 @@ public class twoOpt implements Optimization {
 				newLength += w.getDistanceTo(answer[j+1], answer[i+1]);
 				
 				if (Double.compare(newLength, originalLength) < 0 ) {
-					System.out.println(" byter: " + i + " " + j);
-					
-					for (int a = 1; a < (j+1)-i; a++) {
-						newAnswer[i+a] = answer[j-a+1];
+					if ( (i == 0) || (Double.compare(newLength, bestLenght) < 0) ) {
+						newI = i;
+						newJ = j;
+						bestLenght = newLength;
 					}
-					for (int a = j+1; a < answer.length; a++) {
-						newAnswer[a] = answer[a];
-					}
-					i = answer.length;
-					break;
-					
 				}
 			}
 			
 		}
+		
+		System.out.println(" byter: " + newI + " " + newJ);
+		
+		for (int a = 1; a < (newJ+1)-newI; a++) {
+			newAnswer[newI+a] = answer[newJ-a+1];
+		}
+		for (int a = newJ+1; a < answer.length; a++) {
+			newAnswer[a] = answer[a];
+		}
+		
 		return newAnswer;
 		
 	}
