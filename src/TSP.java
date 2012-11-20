@@ -10,7 +10,7 @@ public class TSP {
 	public static long cutoffTime;
 	
 
-	public static final Algorithm[] algorithms = {new Insertion(), new Greedy(), new NearestNeighbour(), new RandomStupid ()};
+	public static final Algorithm[] algorithms = {new Greedy(), new Insertion(), new NearestNeighbour(), new RandomStupid ()};
 	public static final Optimization[] optimizations = { new twoOpt() };
 
 	/**
@@ -33,8 +33,8 @@ public class TSP {
 		cutoffTime = 1800;
 
 		try{
-//			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
 //			BufferedReader in = new BufferedReader(new FileReader(new File("C:\\indata.txt")));
 			/*
 			String inLine = in.readLine();
