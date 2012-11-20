@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 
 public class Greedy extends Algorithm{
@@ -17,8 +18,25 @@ public class Greedy extends Algorithm{
 		this.size = w.getSize ();
 		width = w.getWidth ();
 		height = w.getHeight ();
+		return getAnswer (getSolutionGraphFromEdges (getEdges ()));
+	}
+	
+	public Edge[] getEdges (){
 		Edge[] edges = addEdges ();
-		Arrays.sort (edges);
+		sortEdges (edges);
+		return edges;
+	}
+	
+	public void sortEdges (Edge[] e){
+		Arrays.sort (e);
+	}
+	
+	public Graph getSolutionGraphFromEdges (Edge[] edges){
+		Graph g = createSolutionGraph (edges);
+		return g;
+	}
+	
+	public Graph createSolutionGraph (Edge[] edges){
 		Graph g = new Graph (size);
 		int checkedEdges=0;
 		//Main loop
@@ -29,10 +47,10 @@ public class Greedy extends Algorithm{
 			//			edges.remove (checkedEdges);
 			checkedEdges++;
 		}
-		return getAnswer (g);
+		return g;
 	}
 
-	private Edge[] addEdges (){
+	public Edge[] addEdges (){
 		int numEdges = sumTo (size-1);
 		Edge[] edges = new Edge[numEdges];
 		int edgeIndex = 0;
