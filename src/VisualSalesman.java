@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,7 @@ public class VisualSalesman extends JFrame{
 	JLabel nameLabel;
 	JLabel oldDistanceLabel;
 	JLabel oldNameLabel;
+	JCheckBox isClumpedCheckbox;
 	Vector<GraphFile> graphs;
 	JComboBox optimizerChooser;
 
@@ -137,12 +139,15 @@ public class VisualSalesman extends JFrame{
 
 		JButton removeGraphButton = new JButton ("Remove");
 		JButton generateGraphButton = new JButton ("Generate");
+		isClumpedCheckbox = new JCheckBox ("Clump");
 		generateGraphButton.addActionListener (new GenerateButtonListener ());
 		removeGraphButton.addActionListener (new RemoveButtonListener ());
 		JPanel graphButtons = new JPanel ();
 		graphButtons.setLayout (new BoxLayout (graphButtons, BoxLayout.X_AXIS));
 		graphButtons.add (generateGraphButton);
+		graphButtons.add (isClumpedCheckbox);
 		graphButtons.add (removeGraphButton);
+		
 
 		JPanel resultsPanel = getResultTextPane ();
 
@@ -270,8 +275,8 @@ public class VisualSalesman extends JFrame{
 			return;
 		clearCanvas ();
 		
-		double widthFactor = getScaleFactor (w.getWidth (), canvas.getHeight ()-10);
-		double heightFactor = getScaleFactor (w.getHeight (), canvas.getHeight ()-10);
+		double widthFactor = getScaleFactor (w.getWidth (), canvas.getWidth ()-20);
+		double heightFactor = getScaleFactor (w.getHeight (), canvas.getHeight ()-20);
 		
 		drawnPositions = calculatePositions (w, heightFactor, widthFactor);
 		for (int i=0;i<w.getSize ();i++){
@@ -304,8 +309,8 @@ public class VisualSalesman extends JFrame{
 			double graphX = positions[i][0];
 			double graphY = positions[i][1];
 
-			int scaledX = (int) (widthFactor * graphX);
-			int scaledY = (int) (heightFactor * graphY);
+			int scaledX = (int) (widthFactor * graphX)+10;
+			int scaledY = (int) (heightFactor * graphY)+10;
 
 			scaledPositions[i][0] = scaledX;
 			scaledPositions[i][1] = scaledY;
@@ -331,6 +336,7 @@ public class VisualSalesman extends JFrame{
 					JOptionPane.showMessageDialog (((Component) e.getSource ()).getParent (), "Invalid format");
 					return;
 				}
+				gf.setIsClumped (isClumpedCheckbox.isSelected ());
 				TestCaseFactory.writeGraph (gf);
 				TestCaseFactory.addFileToFileList (gf);
 				graphs.add(gf);
