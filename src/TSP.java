@@ -115,7 +115,10 @@ public class TSP {
 			int[] answer = algo.solve(w);
 			
 			Optimization opt = new twoOpt();
-			return optimizeResult(opt, answer, w);
+			for (int i=0;i<15;i++){
+				answer = optimizeResult(opt, answer, w);
+			}
+			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
 		}

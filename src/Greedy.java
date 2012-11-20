@@ -2,9 +2,12 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 
-
+/**
+ * Works now. Max points with 2opt was 6 @ kattis. fuckin' sucks
+ * @author jens
+ *
+ */
 public class Greedy extends Algorithm{
 
 	World w;
@@ -14,11 +17,15 @@ public class Greedy extends Algorithm{
 
 	@Override
 	public int[] solve (World w) {
+		try{
 		this.w = w;
 		this.size = w.getSize ();
 		width = w.getWidth ();
 		height = w.getHeight ();
 		return getAnswer (getSolutionGraphFromEdges (getEdges ()));
+		} catch (Exception e){
+			return new NearestNeighbour ().solve (w);
+		}
 	}
 	
 	public Edge[] getEdges (){

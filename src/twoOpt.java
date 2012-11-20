@@ -32,7 +32,7 @@ public class twoOpt implements Optimization {
 			
 		}
 		
-		System.out.println(" byter: " + newI + " " + newJ);
+//		System.out.println(" byter: " + newI + " " + newJ);
 		
 		for (int a = 1; a < (newJ+1)-newI; a++) {
 			newAnswer[newI+a] = answer[newJ-a+1];
