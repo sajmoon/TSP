@@ -52,7 +52,7 @@ public class twoOpt implements Optimization {
 				newLength += w.getDistanceTo(answer[j+1], answer[i+1]);
 				
 				if (Double.compare(newLength, originalLength) < 0 ) {
-					if ( (i == 0) || (Double.compare(newLength, bestLenght) < 0) ) {
+					if ( (newI == 0) || (Double.compare(newLength, bestLenght) < 0) ) {
 						newI = i;
 						newJ = j;
 						bestLenght = newLength;
