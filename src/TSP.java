@@ -10,7 +10,7 @@ public class TSP {
 	public static long cutoffTime;
 	
 
-	public static final Algorithm[] algorithms = {new Insertion(), new Greedy(), new NearestNeighbour(), new RandomStupid ()};
+	public static final Algorithm[] algorithms = {new Greedy(), new Insertion(), new NearestNeighbour(), new RandomStupid ()};
 	public static final Optimization[] optimizations = { new twoOpt() };
 
 	/**
@@ -33,8 +33,8 @@ public class TSP {
 		cutoffTime = 1800;
 
 		try{
-//			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
 //			BufferedReader in = new BufferedReader(new FileReader(new File("C:\\indata.txt")));
 			/*
 			String inLine = in.readLine();
@@ -53,7 +53,6 @@ public class TSP {
 			int[] answer = algo.solve(w);
 //			printWorldDistance(answer, w);
 			Optimization opt = new twoOpt();
->>>>>>> 2a44d8eca7f29811dc821e239b044e8c2392a569
 //			System.out.println("After optimizations");
 			int i = 0;
 			while ( (System.currentTimeMillis() - startTime) < cuttOfTime ) {
@@ -114,6 +113,10 @@ public class TSP {
 			World w = makeWorld (in);
 			int[] answer = algo.solve(w);
 			
+			Optimization opt = new twoOpt();
+			for (int i=0;i<15;i++){
+				answer = optimizeResult(opt, answer, w);
+			}
 			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -121,6 +124,15 @@ public class TSP {
 		return null;
 	}
 
+	public static int[] optimizeResult(Optimization opt, int[] g, World w) {
+		
+//		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {
+			g = opt.optimize(w, g, System.currentTimeMillis() - startTime);
+//		}
+		
+		return g;
+	}
+	
 	public static TraversalGraph optimizeResult(Optimization opt, TraversalGraph g, World w) {
 		
 //		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {

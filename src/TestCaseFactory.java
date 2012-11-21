@@ -16,23 +16,23 @@ import javax.swing.JOptionPane;
 
 
 public class TestCaseFactory {
-	
-	static final int SCALE_FACTOR = 5;
+
+	static final int SCALE_FACTOR = 2;
 	final static String sep = System.getProperty ("file.separator");
 	final static String FILE_NAME_BASE = "testcases"+System.getProperty ("file.separator");
 	final static String GRAPH_DB = FILE_NAME_BASE+"graphs";
-	
+
 	public static void main (String[] args){
 		GraphFile gf = askAndCreateGraphFile();
 		try {
 			writeGraph (gf);
 			addFileToFileList (gf);
-//			TSP.runSolverAndPrintToConsoleWithDistance (TSP.algorithms[0], new BufferedReader(new FileReader(gf.file)));
+			//			TSP.runSolverAndPrintToConsoleWithDistance (TSP.algorithms[0], new BufferedReader(new FileReader(gf.file)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static GraphFile askAndCreateGraphFile (){
 		String format = JOptionPane.showInputDialog ("Input format: graphdimensions filename");
 		String[] options = format.split (" ");
@@ -61,32 +61,32 @@ public class TestCaseFactory {
 		}
 		return new GraphFile (size, options[1], file);
 	}
-	
+
 	public static void removeGraphFromDb (GraphFile gf){
-	    try {
-		File dbFile = new File (GRAPH_DB);
-		File temp = new File (GRAPH_DB+"_temp");
-		BufferedReader br = new BufferedReader(new FileReader(dbFile));
-		PrintWriter pw = new PrintWriter(new FileWriter(temp));
-		String lineToRemove = gf.name+" "+gf.size+" "+gf.file.getAbsolutePath ();
-		String line = "";
-		while ((line = br.readLine()) != null) {
-	        
-	        if (!line.trim().equals(lineToRemove)) {
-	          pw.println(line);
-	          pw.flush();
-	        }
-	      }
-	      pw.close();
-	      br.close();
-	      dbFile.delete ();
-	      temp.renameTo (dbFile);
+		try {
+			File dbFile = new File (GRAPH_DB);
+			File temp = new File (GRAPH_DB+"_temp");
+			BufferedReader br = new BufferedReader(new FileReader(dbFile));
+			PrintWriter pw = new PrintWriter(new FileWriter(temp));
+			String lineToRemove = gf.name+" "+gf.size+" "+gf.file.getAbsolutePath ();
+			String line = "";
+			while ((line = br.readLine()) != null) {
+
+				if (!line.trim().equals(lineToRemove)) {
+					pw.println(line);
+					pw.flush();
+				}
+			}
+			pw.close();
+			br.close();
+			dbFile.delete ();
+			temp.renameTo (dbFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public static Vector<GraphFile> getSavedTestCases () throws IOException{
 		File graphDb = new File (GRAPH_DB);
 		if (!graphDb.exists ())
@@ -104,7 +104,7 @@ public class TestCaseFactory {
 		reader.close ();
 		return graphFiles;
 	}
-	
+
 	public static void addFileToFileList (GraphFile gf) throws IOException {
 		File graphDb = new File (GRAPH_DB);
 		if (!graphDb.exists ())
@@ -113,8 +113,55 @@ public class TestCaseFactory {
 		writer.append ("" + gf.name + " " + gf.size + " " + gf.file.getAbsolutePath () + "\n");
 		writer.close ();
 	}
-	
+
 	public static void writeGraph (GraphFile gf) throws IOException{
+		if (gf.clumped)
+			writeClumpedGraph (gf);
+		else
+			writeRandomGraph (gf);
+	}
+	/**
+	 * THIS DOES NOT FUCKING WORK
+	 * @param gf
+	 * @throws IOException
+	 */
+	public static void writeClumpedGraph (GraphFile gf) throws IOException{
+		Random r = new Random ();
+		BufferedWriter out = new BufferedWriter (new FileWriter(gf.file));
+		out.write (""+gf.size+"\n");
+		int size = gf.size;
+		int clumpSize = 10;
+		if (size < 20)
+			clumpSize = 5;
+		if (size < 10)
+			clumpSize = 1;
+		int placedCities = 0;
+		for (int i=0;i<size;i+=clumpSize){
+			for (int j=0;j<clumpSize;j++,placedCities++){
+				double rand1 = r.nextDouble ();
+				double rand2 = r.nextDouble ();
+				double negative = 1;
+				if (r.nextInt (2) > 0)
+					negative = -1;
+				double x = (rand1*SCALE_FACTOR*size+i)*negative;
+				double y = (rand2*SCALE_FACTOR*size+i)*negative;
+				String coords = ""+x+" "+y+"\n";
+				out.write (coords);
+			}
+		}
+		int remainingCities = size - placedCities;
+		while (remainingCities > 0){
+			//Make own clump
+			double x = r.nextDouble ()*size*SCALE_FACTOR;
+			double y = r.nextDouble ()*size*SCALE_FACTOR;
+			String coords = ""+x+" "+y+"\n";
+			out.write (coords);
+			remainingCities--;
+		}
+		out.close ();
+	}
+
+	public static void writeRandomGraph (GraphFile gf) throws IOException{
 		Random r = new Random ();
 		BufferedWriter out = new BufferedWriter (new FileWriter(gf.file));
 		out.write (""+gf.size+"\n");
@@ -126,7 +173,7 @@ public class TestCaseFactory {
 		}
 		out.close ();
 	}
-	
-	
+
+
 
 }
