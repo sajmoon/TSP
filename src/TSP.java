@@ -115,7 +115,7 @@ public class TSP {
 			
 			Optimization opt = new twoOpt();
 			for (int i=0;i<15;i++){
-				answer = optimizeResult(opt, answer, w);
+//				answer = optimizeResult(opt, answer, w);
 			}
 			return answer;
 		} catch (Exception e){
