@@ -3,6 +3,36 @@ import java.util.Random;
 
 public class twoOpt implements Optimization {
 
+	public TraversalGraph optimize(World w, TraversalGraph g, long timeLeft) {
+		GraphNode x = null;
+		GraphNode y = null;
+		double bestLength = 0;
+		for (GraphNode node : g.list) {
+			for (int i = 0; i < g.list.length; i++) {
+				double originalLength = 0;
+				originalLength += w.getDistanceTo(node.id, node.next.id);
+				originalLength += w.getDistanceTo(g.get(i).id, g.get(i+1).id);
+				
+				double newLength = 0;
+				
+				newLength += w.getDistanceTo(node.id, g.get(i).id);
+				newLength += w.getDistanceTo(node.next.id, g.get(i+1).id);
+				
+				if (Double.compare(newLength, originalLength) < 0 ) {
+					if ( (x == null) || (Double.compare(newLength, bestLength) < 0) ) {
+						x = node;
+						y = g.get(i);
+						bestLength = newLength;
+					}
+				}
+			}
+		}
+		
+		x.next = y;
+		
+		return g;
+	}
+	
 	public int[] optimize(World w, int[] answer, long timeLeft) {
 		
 		int[] newAnswer = new int[answer.length];
@@ -32,7 +62,7 @@ public class twoOpt implements Optimization {
 			
 		}
 		
-		System.out.println(" byter: " + newI + " " + newJ);
+//		System.out.println(" byter: " + newI + " " + newJ);
 		
 		for (int a = 1; a < (newJ+1)-newI; a++) {
 			newAnswer[newI+a] = answer[newJ-a+1];

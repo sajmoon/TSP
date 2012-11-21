@@ -210,7 +210,10 @@ public class VisualSalesman extends JFrame{
 	
 	private void runOptimization (Optimization opt) {
 		try {
-			answer = TSP.optimizeResult(opt, answer, w);
+			TraversalGraph g = new TraversalGraph(answer, w);
+			g = TSP.optimizeResult(opt, g, w);
+			
+			answer = g.toIntArray();
 			drawAnswer (answer, w, gf.name);
 		} catch (Exception e) {
 			e.printStackTrace();

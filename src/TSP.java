@@ -114,21 +114,20 @@ public class TSP {
 			World w = makeWorld (in);
 			int[] answer = algo.solve(w);
 			
-			Optimization opt = new twoOpt();
-			return optimizeResult(opt, answer, w);
+			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static int[] optimizeResult(Optimization opt, int[] answer, World w) {
+	public static TraversalGraph optimizeResult(Optimization opt, TraversalGraph g, World w) {
 		
 //		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {
-			answer = opt.optimize(w, answer, System.currentTimeMillis() - startTime);
+			g = opt.optimize(w, g, System.currentTimeMillis() - startTime);
 //		}
 		
-		return answer;
+		return g;
 	}
 	
 	

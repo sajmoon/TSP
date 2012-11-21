@@ -123,6 +123,18 @@ public class World {
 		return positions;
 	}
 	
+	public double getPositionX(int i) {
+		return positions[i][0];
+	}
+	
+	public double getPositionY(int i) {
+		return positions[i][1];
+	}
+	
+	public GraphNode  getCityAsNode(int i) {
+		return new GraphNode (i, getPositionX(i), getPositionY(i));
+	}
+	
 	public double getWidth (){
 		return largestX;
 	}
