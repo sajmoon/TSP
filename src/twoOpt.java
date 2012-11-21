@@ -8,7 +8,7 @@ public class twoOpt implements Optimization {
 		GraphNode y = null;
 		double bestLength = 0;
 		for (GraphNode node : g.list) {
-			for (int i = 0; i < g.list.length; i++) {
+			for (int i = node.next.id; i < g.list.length-1; i++) {
 				double originalLength = 0;
 				originalLength += w.getDistanceTo(node.id, node.next.id);
 				originalLength += w.getDistanceTo(g.get(i).id, g.get(i+1).id);
@@ -22,13 +22,15 @@ public class twoOpt implements Optimization {
 					if ( (x == null) || (Double.compare(newLength, bestLength) < 0) ) {
 						x = node;
 						y = g.get(i);
-						bestLength = newLength;
+						bestLength = originalLength - newLength;
 					}
 				}
 			}
 		}
 		
-		x.next = y;
+		// Do the switch
+		g.switchNodes(x,y);
+		
 		
 		return g;
 	}
@@ -52,10 +54,10 @@ public class twoOpt implements Optimization {
 				newLength += w.getDistanceTo(answer[j+1], answer[i+1]);
 				
 				if (Double.compare(newLength, originalLength) < 0 ) {
-					if ( (newI == 0) || (Double.compare(newLength, bestLenght) < 0) ) {
+					if ( (newI == 0) || (Double.compare(originalLength - newLength, bestLenght) > 0) ) {
 						newI = i;
 						newJ = j;
-						bestLenght = newLength;
+						bestLenght = originalLength - newLength;
 					}
 				}
 			}

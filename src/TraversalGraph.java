@@ -33,4 +33,16 @@ public class TraversalGraph {
 	public GraphNode get(int i) {
 		return list[i];
 	}
+
+	public void switchNodes(GraphNode x, GraphNode y) {
+		GraphNode xNext = x.next;
+		GraphNode yNext = y.next;
+		
+		x.next.switchRecursivelyUntilId(y.id);
+		
+		x.next = y;
+		
+		y.previous = x;
+		xNext.next = yNext;
+	}
 }

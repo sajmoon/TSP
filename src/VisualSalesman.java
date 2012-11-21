@@ -217,8 +217,9 @@ public class VisualSalesman extends JFrame{
 		try {
 //			TraversalGraph g = new TraversalGraph(answer, w);
 //			g = TSP.optimizeResult(opt, g, w);
-			answer = TSP.optimizeResult(opt, answer, w);
+//			g = TSP.optimizeResult(opt, g, w);
 //			answer = g.toIntArray();
+			answer = TSP.optimizeResult(opt, answer, w);
 			drawAnswer (answer, w, gf.name);
 		} catch (Exception e) {
 			e.printStackTrace();

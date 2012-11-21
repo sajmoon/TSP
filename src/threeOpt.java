@@ -32,4 +32,10 @@ public class threeOpt implements Optimization {
 		return answer;
 		
 	}
+
+	@Override
+	public TraversalGraph optimize(World w, TraversalGraph g, long l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

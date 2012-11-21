@@ -114,9 +114,14 @@ public class TSP {
 			int[] answer = algo.solve(w);
 			
 			Optimization opt = new twoOpt();
-			for (int i=0;i<15;i++){
-//				answer = optimizeResult(opt, answer, w);
+//			TraversalGraph g = new TraversalGraph(answer, w);
+			
+			for (int i=0;i<12;i++){
+//				g = optimizeResult(opt, g, w);
+				answer = optimizeResult(opt, answer, w);
 			}
+			
+//			return g.toIntArray();
 			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -135,7 +140,7 @@ public class TSP {
 	
 	public static TraversalGraph optimizeResult(Optimization opt, TraversalGraph g, World w) {
 		
-//		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {
+//		for (int i = 0; i < 30; i++) {
 			g = opt.optimize(w, g, System.currentTimeMillis() - startTime);
 //		}
 		
