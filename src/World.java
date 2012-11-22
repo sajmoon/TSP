@@ -11,7 +11,7 @@ public class World {
 	double largestY = 0;
 
 	Triple[][] neighbourlist;
-	int neighbourlistSize = 40;
+	int neighbourlistSize = 60;
 
 	static final boolean DEBUG = false;
 
@@ -20,6 +20,8 @@ public class World {
 		positions = new double[size][2];
 		matrix = new double[size][size];
 		nextIndex = 0;
+		if (size < neighbourlistSize)
+			neighbourlistSize = size;
 		neighbourlist = new Triple[size][neighbourlistSize];
 	}
 
@@ -48,7 +50,7 @@ public class World {
 
 	public void makeNeighbourList() {
 		ArrayList<Triple> list = new ArrayList<Triple>();
-
+		// TODO borde kanske vara en MinHeap
 		for (int i = 0; i < size-1; i++) {
 			
 			for (int j = 0; j < size-1; j++) {
@@ -64,14 +66,12 @@ public class World {
 				}
 			});
 
-			for (int x = 0; x < neighbourlistSize; x++) {
-				
+			for (int x = 0; x < neighbourlistSize-2; x++) {
 				neighbourlist[i][x] = list.get(x);
 				if (DEBUG)
 					System.out.println("Nei[" + i + "][" + x + "] distance: " + neighbourlist[i][x].distance);
 			}
 			list.clear();
-
 		}
 	}
 
@@ -155,16 +155,38 @@ public class World {
 	}
 
 	public int getNearestCity (int city, boolean[] visited){
-		double shortestDist = Double.MAX_VALUE;
+//		double shortestDist = Double.MAX_VALUE;
+//		int nearest = 0;
+//		for (int i=0;i<size;i++){
+//			if (i == city)
+//				continue;
+//			double dist = matrix[city][i];
+//			if (dist < shortestDist && !visited[i]){
+//				shortestDist = dist;
+//				nearest = i;
+//			}
+//		}
+//		return nearest;
 		int nearest = 0;
-		for (int i=0;i<size;i++){
-			if (i == city)
-				continue;
-			double dist = matrix[city][i];
-			if (dist < shortestDist && !visited[i]){
-				shortestDist = dist;
+		for (int i = 0; i < size; i++) {
+			if (!visited[i]) {
 				nearest = i;
+				break;
 			}
+		}
+		if (nearest == 0) {
+			//backupplan om alla i neighbourlist är besökta.
+			double shortestDist = Double.MAX_VALUE;
+			for (int i=0;i<size;i++){
+				if (i == city)
+					continue;
+				double dist = matrix[city][i];
+				if (dist < shortestDist && !visited[i]){
+					shortestDist = dist;
+					nearest = i;
+				}
+			}
+			return nearest;
 		}
 		return nearest;
 	}
