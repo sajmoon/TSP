@@ -119,7 +119,7 @@ public class TSP {
 			Optimization opt = new twoOpt();
 //			TraversalGraph g = new TraversalGraph(answer, w);
 			
-			for (int i=0;i<3;i++){
+			for (int i=0;i<5;i++){
 //				g = optimizeResult(opt, g, w);
 				answer = optimizeResult(opt, answer, w);
 			}
