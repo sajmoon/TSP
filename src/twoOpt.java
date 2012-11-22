@@ -19,7 +19,7 @@ public class twoOpt implements Optimization {
 				newLength += w.getDistanceTo(node.next.id, g.get(i+1).id);
 				
 				if (Double.compare(newLength, originalLength) < 0 ) {
-					if ( (x == null) || (Double.compare(newLength, bestLength) < 0) ) {
+					if ( (x == null) || (Double.compare(originalLength - newLength, bestLength) > 0) ) {
 						x = node;
 						y = g.get(i);
 						bestLength = originalLength - newLength;
@@ -29,6 +29,7 @@ public class twoOpt implements Optimization {
 		}
 		
 		// Do the switch
+		
 		g.switchNodes(x,y);
 		
 		

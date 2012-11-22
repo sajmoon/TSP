@@ -1,3 +1,4 @@
+
 public class GraphNode {
 	double x;
 	double y;

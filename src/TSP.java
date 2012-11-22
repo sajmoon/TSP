@@ -111,6 +111,9 @@ public class TSP {
 		try{
 
 			World w = makeWorld (in);
+			
+			w.makeNeighbourList();
+			
 			int[] answer = algo.solve(w);
 			
 			Optimization opt = new twoOpt();

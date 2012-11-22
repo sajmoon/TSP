@@ -3,7 +3,10 @@ public class threeOpt implements Optimization {
 
 	public int[] optimize(World w, int[] answer, long timeLeft) {
 		int STEP = 5;
-		for (int i = 0; i < answer.length - STEP; i += 1) {
+		for (int i = 0; i < answer.length - 1; i++) {
+			for (int j = i; j < answer.length - 1; j++) {
+				
+			}
 			//hoppa två steg
 			double originalLength = 0;
 			
@@ -11,8 +14,6 @@ public class threeOpt implements Optimization {
 			originalLength += w.getDistanceTo(answer[i], answer[i+1]);
 			originalLength += w.getDistanceTo(answer[i+1], answer[i+2]);
 			originalLength += w.getDistanceTo(answer[i+2], answer[i+3]);
-			
-			System.out.println("new: " + newOriginalLength + " " + originalLength);
 			
 			double newLength = 0;
 			
