@@ -117,6 +117,7 @@ public class VisualSalesman extends JFrame{
 		JPanel optPanel = new JPanel ();
 		optimizerChooser = new JComboBox (opts);
 		JButton runOptimizerButton = new JButton ("Optimize once");
+		JButton run100OptimizerButton = new JButton ("Optimize x 100");
 		
 		runOptimizerButton.addActionListener(new ActionListener() {
 			@Override
@@ -126,9 +127,21 @@ public class VisualSalesman extends JFrame{
 			}
 		});
 		
+		run100OptimizerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Optimization o = (Optimization) optimizerChooser.getItemAt(optimizerChooser.getSelectedIndex());
+				for (int i = 0; i < 100; i++) {
+					runOptimization(o);
+				}
+				
+			}
+		});
+		
 		
 		optPanel.add(optimizerChooser);
 		optPanel.add(runOptimizerButton);
+		optPanel.add(run100OptimizerButton);
 
 		JPanel eastPanel = new JPanel ();
 		eastPanel.setLayout (new BoxLayout (eastPanel, BoxLayout.Y_AXIS));
