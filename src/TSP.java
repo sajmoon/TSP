@@ -104,6 +104,8 @@ public class TSP {
 
 			w.add(Double.parseDouble(a[0]), Double.parseDouble(a[1]));
 		}
+		
+		w.makeNeighbourList();
 		return w;
 	}
 	
@@ -112,7 +114,7 @@ public class TSP {
 
 			World w = makeWorld (in);
 			
-			w.makeNeighbourList();
+			
 			
 			int[] answer = algo.solve(w);
 			

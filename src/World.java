@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.TreeSet;
 
 public class World {
 	double[][] positions;
@@ -49,29 +50,21 @@ public class World {
 	}
 
 	public void makeNeighbourList() {
-		ArrayList<Triple> list = new ArrayList<Triple>();
-		// TODO borde kanske vara en MinHeap
 		for (int i = 0; i < size-1; i++) {
-			
+			TreeSet<Triple> h = new TreeSet<Triple>();
 			for (int j = 0; j < size-1; j++) {
 				if (i == j) {
 				} else {
-					list.add(new Triple(i, j, this.matrix[i][j]));
+					h.add(new Triple(i, j, this.matrix[i][j]));
 				}
 			}
-
-			Collections.sort(list, new Comparator<Triple>() {
-				public int compare(Triple a, Triple b) {
-					return a.compareTo(b);
-				}
-			});
-
+	
 			for (int x = 0; x < neighbourlistSize-2; x++) {
-				neighbourlist[i][x] = list.get(x);
+				 neighbourlist[i][x] = h.pollFirst();
 				if (DEBUG)
-					System.out.println("Nei[" + i + "][" + x + "] distance: " + neighbourlist[i][x].distance);
+					System.out.println("makeNeigbourList() Nei[" + i + "][" + x + "] distance: " + neighbourlist[i][x].to + " " + neighbourlist[i][x].distance);
 			}
-			list.clear();
+			h.clear();
 		}
 	}
 
