@@ -101,16 +101,7 @@ public class VisualSalesman extends JFrame{
 		JPanel algoPanel = new JPanel ();
 		algoChooser = new JComboBox (algorithms);
 		JButton runSolverButton = new JButton ("Solve");
-		runSolverButton.addActionListener (new ActionListener (){
-
-			@Override
-			public void actionPerformed (ActionEvent e) {
-				Algorithm chosenAlgo = (Algorithm) algoChooser.getItemAt (algoChooser.getSelectedIndex ());
-				gf = (GraphFile) graphList.getSelectedValue ();
-				runSolution (chosenAlgo, gf);
-
-			}
-		});
+		runSolverButton.addActionListener (new RunButtonListener ());
 		algoPanel.add (algoChooser);
 		algoPanel.add (runSolverButton);
 		
@@ -217,9 +208,11 @@ public class VisualSalesman extends JFrame{
 	private void runSolution (Algorithm chosenAlgo, GraphFile gf) {
 		
 		try {
+			long start = System.currentTimeMillis ();
 			w = TSP.makeWorld (new BufferedReader(new FileReader(gf.file)));
 			answer = TSP.solveForWorld (chosenAlgo, w);
-			drawAnswer (answer, w, gf.name);
+			long time = System.currentTimeMillis () - start;
+			drawAnswer (answer, w, gf.name, time);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -232,14 +225,14 @@ public class VisualSalesman extends JFrame{
 //			g = TSP.optimizeResult(opt, g, w);
 //			answer = g.toIntArray();
 			answer = TSP.optimizeResult(opt, answer, w);
-			drawAnswer (answer, w, gf.name);
+			drawAnswer (answer, w, gf.name, 80085);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	private void drawAnswer (int[] answer, World w, String name) {
+	private void drawAnswer (int[] answer, World w, String name, long time) {
 		clearCanvas ();
 		drawMap (w, name, true);
 		Color lineColor = Color.RED;
@@ -257,11 +250,11 @@ public class VisualSalesman extends JFrame{
 			distanceLabel.setForeground (frgnd);
 		}else{
 			Utils.printAnswer (answer);
-			updateResultTexts (Utils.getAnswerDistance (answer, w));
+			updateResultTexts (Utils.getAnswerDistance (answer, w), time);
 		}
 	}
 
-	private void updateResultTexts (double answerDistance) {
+	private void updateResultTexts (double answerDistance, long time) {
 		String distString = "Total distance "+answerDistance;
 		distString = distString.substring (0, distString.indexOf ('.')+2);
 		Algorithm algo = (Algorithm) algoChooser.getSelectedItem ();
@@ -269,7 +262,7 @@ public class VisualSalesman extends JFrame{
 		oldDistanceLabel.setText (distanceLabel.getText ());
 		oldNameLabel.setText (nameLabel.getText ());
 
-		distanceLabel.setText (distString);
+		distanceLabel.setText (distString+" in "+time+" ms");
 		nameLabel.setText (algoName+" | "+currentlyDrawnMap);
 
 	}
@@ -381,6 +374,15 @@ public class VisualSalesman extends JFrame{
 			if (f.exists ())
 				f.delete ();
 
+		}
+	}
+	
+	private class RunButtonListener implements ActionListener {
+		@Override
+		public void actionPerformed (ActionEvent e) {
+			Algorithm chosenAlgo = (Algorithm) algoChooser.getItemAt (algoChooser.getSelectedIndex ());
+			gf = (GraphFile) graphList.getSelectedValue ();
+			runSolution (chosenAlgo, gf);
 		}
 	}
 

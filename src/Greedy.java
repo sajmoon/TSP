@@ -9,23 +9,25 @@ import java.util.HashMap;
  *
  */
 public class Greedy extends Algorithm{
+	
+	static final int NEIGHBOURS_SIZE = 100;
 
 	World w;
 	int size;
 	double width;
-	double height;
+	double height;	
 
 	@Override
 	public int[] solve (World w) {
-		try{
+//		try{
 		this.w = w;
 		this.size = w.getSize ();
 		width = w.getWidth ();
 		height = w.getHeight ();
 		return getAnswer (getSolutionGraphFromEdges (getEdges ()));
-		} catch (Exception e){
-			return new NearestNeighbour ().solve (w);
-		}
+//		} catch (Exception e){
+//			return new NearestNeighbour ().solve (w);
+//		}
 	}
 	
 	public Edge[] getEdges (){
@@ -58,15 +60,21 @@ public class Greedy extends Algorithm{
 	}
 
 	public Edge[] addEdges (){
-		int numEdges = sumTo (size-1);
-		Edge[] edges = new Edge[numEdges];
-		int edgeIndex = 0;
+		EdgeListNode[] nodes = new EdgeListNode[size];
+		for (int i=0;i<size;i++)
+			nodes[i] = new EdgeListNode ();
+//		int numEdges = sumTo (size-1);
 		for (int i=0;i<size;i++){
 			for (int j=0;j<i;j++){
-				double dist = w.getDistanceTo (i, j);
-				Edge e = new Edge (i,j, dist);
-				edges[edgeIndex] = e;
-				edgeIndex++;
+				Edge e = new Edge (i,j);
+				nodes[i].addEdge (e);
+			}
+		}
+		Edge[] edges = new Edge[size*NEIGHBOURS_SIZE];
+		for (int i=0;i<size;i++){
+			EdgeListNode n = nodes[i];
+			for (int j=0;j < NEIGHBOURS_SIZE;j++){
+				edges[i*NEIGHBOURS_SIZE + j] = n.getShortestEdge ();
 			}
 		}
 		return edges;
@@ -91,25 +99,37 @@ public class Greedy extends Algorithm{
 		return ret;
 	}
 
-	private static final class Edge implements Comparable<Edge>{
+	private class Edge implements Comparable<Edge>{
 		public int from,to;
-		public double dist;
+		boolean isDummy = false;
 
-		public Edge (int fro, int t, double dis){
+		public Edge (int fro, int t){
 			from = fro;
 			to = t;
-			dist = dis;
 		}
+		
+		public Edge (boolean dummy){
+			isDummy = dummy;
+		}
+		
 		public Edge getReverse(){
-			return new Edge (to, from, dist);
+			return new Edge (to, from);
 		}
 
 		@Override
 		public int compareTo (Edge o) {
-			if (o.dist > dist)
-				return -1;
-			if (dist > o.dist)
+			if (isDummy && o.isDummy)
+				return 0;
+			if (isDummy)
 				return 1;
+			if (o.isDummy)
+				return -1;
+			
+			double dist = w.getDistanceTo (from, to);
+			if (o.getDistance () > dist)
+				return 1;
+			if (dist > o.getDistance ())
+				return -1;
 			return 0;
 
 		}
@@ -133,6 +153,12 @@ public class Greedy extends Algorithm{
 
 		public String toString (){
 			return "("+from+", "+to+")";
+		}
+		
+		public double getDistance (){
+			if (isDummy)
+				return Double.MAX_VALUE;
+			return w.getDistanceTo (from, to);
 		}
 	}
 
@@ -227,5 +253,31 @@ public class Greedy extends Algorithm{
 			}
 			return null;
 		}
+	}
+	
+	private class EdgeListNode {
+		
+		Edge[] edges = new Edge[NEIGHBOURS_SIZE];
+		int numTaken = 0;
+		int numAdded = 0;
+		
+		public EdgeListNode (){
+			Arrays.fill (edges, new Edge (true));
+		}
+		
+		public void addEdge (Edge e){
+			if (e.getDistance () > edges[numAdded].getDistance ())
+				return;
+			edges[numAdded] = e;
+			Arrays.sort (edges);
+			if (numAdded < NEIGHBOURS_SIZE-1)
+				numAdded++;
+		}
+		
+		public Edge getShortestEdge (){
+			numTaken++;
+			return edges[numTaken-1];
+		}
+		
 	}
 }
