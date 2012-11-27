@@ -35,6 +35,12 @@ public class LinKernighan extends Algorithm{
 			
 		}
 	}
+
+	@Override
+	public Graph graphSolve (World w) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	/*
 	 * http://www.ida.liu.se/~TDDB19/reports_2003/htsp.pdf

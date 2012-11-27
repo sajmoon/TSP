@@ -3,11 +3,12 @@ import java.util.Random;
 
 public class twoOpt implements Optimization {
 
-	public TraversalGraph optimize(World w, TraversalGraph g, long timeLeft) {
-		GraphNode x = null;
-		GraphNode y = null;
+	public TraversalGraph optimize(World w, Graph g, long timeLeft) {
+		Node x = null;
+		Node y = null;
 		double bestLength = 0;
-		for (GraphNode node : g.list) {
+		for (int n = 0;n<w.size;n++) {
+			Node node = g.getNode (n);
 			for (int i = node.next.id; i < g.list.length-1; i++) {
 				double originalLength = 0;
 				originalLength += w.getDistanceTo(node.id, node.next.id);

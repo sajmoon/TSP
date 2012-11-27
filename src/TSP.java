@@ -143,15 +143,6 @@ public class TSP {
 		return g;
 	}
 	
-	public static TraversalGraph optimizeResult(Optimization opt, TraversalGraph g, World w) {
-		
-//		for (int i = 0; i < 30; i++) {
-			g = opt.optimize(w, g, System.currentTimeMillis() - startTime);
-//		}
-		
-		return g;
-	}
-	
 	
 	public static int[] solveForWorld (Algorithm algo, World w){
 		return algo.solve (w);

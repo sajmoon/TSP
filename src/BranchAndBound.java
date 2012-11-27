@@ -7,16 +7,6 @@ public class BranchAndBound extends Algorithm {
 	World world;
 	int size;
 	
-	@Override
-	public int[] solve(World w) {
-		world = w;
-		size = world.getSize();
-		int cost = all_pairs_weight();
-		
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
 	private int all_pairs_weight() {
 		for (int i = 0; i < size; i++) {
 			//world.getDistance()
@@ -26,6 +16,16 @@ public class BranchAndBound extends Algorithm {
 	
 	private int[] search() {
 		return new int[4];
+	}
+	@Override
+	public Graph graphSolve (World w) {
+		world = w;
+		size = world.getSize();
+		int cost = all_pairs_weight();
+		
+		// TODO Auto-generated method stub
+		
+		return null;
 	}
 
 }

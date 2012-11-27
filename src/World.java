@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.TreeSet;
 
 public class World {
@@ -201,10 +198,6 @@ public class World {
 
 	public double getPositionY(int i) {
 		return positions[i][1];
-	}
-
-	public GraphNode  getCityAsNode(int i) {
-		return new GraphNode (i, getPositionX(i), getPositionY(i));
 	}
 
 	public double getWidth (){

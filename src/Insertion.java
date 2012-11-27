@@ -87,5 +87,11 @@ public class Insertion extends Algorithm{
 		return rInt;
 		
 	}
+
+	@Override
+	public Graph graphSolve (World w) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

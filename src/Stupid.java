@@ -13,4 +13,10 @@ public class Stupid extends Algorithm {
 		}
 		return answer;
 	}
+
+	@Override
+	public Graph graphSolve (World w) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

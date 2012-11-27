@@ -13,6 +13,7 @@ public class NearestNeighbour extends Algorithm {
 		int[] ret = new int[size];
 		int numVisited = 0;
 		int currentCity = 0;
+		Graph g = new Graph (w.getSize ());
 		while (numVisited < size){
 			ret[numVisited] = currentCity;
 			visited[currentCity] = true;
@@ -21,5 +22,11 @@ public class NearestNeighbour extends Algorithm {
 		}
 		
 		return ret;
+	}
+
+	@Override
+	public Graph graphSolve (World w) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
