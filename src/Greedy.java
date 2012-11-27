@@ -7,7 +7,7 @@ import java.util.Collections;
  *
  */
 public class Greedy extends Algorithm{
-	
+
 	static final int NEIGHBOURS_SIZE = 100;
 
 	World w;
@@ -17,32 +17,15 @@ public class Greedy extends Algorithm{
 
 	@Override
 	public Graph graphSolve (World w) {
-//		try{
 		this.w = w;
 		this.size = w.getSize ();
 		width = w.getWidth ();
 		height = w.getHeight ();
-		return getSolutionGraphFromEdges (getEdges ());
-//		} catch (Exception e){
-//			return new NearestNeighbour ().solve (w);
-//		}
-	}
-	
-	public Edge[] getEdges (){
 		Edge[] edges = addEdges ();
-		sortEdges (edges);
-		return edges;
+		Arrays.sort (edges);
+		return createSolutionGraph (edges);
 	}
-	
-	public void sortEdges (Edge[] e){
-		Arrays.sort (e);
-	}
-	
-	public Graph getSolutionGraphFromEdges (Edge[] edges){
-		Graph g = createSolutionGraph (edges);
-		return g;
-	}
-	
+
 	public Graph createSolutionGraph (Edge[] edges){
 		Graph g = new Graph (size);
 		int checkedEdges=0;
@@ -67,37 +50,45 @@ public class Greedy extends Algorithm{
 				nodes[i].addEdge (e);
 			}
 		}
-		Edge[] edges = new Edge[size*NEIGHBOURS_SIZE];
+		ArrayList<Edge> edges = new ArrayList<Edge> ();
 		for (int i=0;i<size;i++){
 			EdgeListNode n = nodes[i];
-			for (int j=0;j < NEIGHBOURS_SIZE;j++){
-				edges[i*NEIGHBOURS_SIZE + j] = n.getShortestEdge ();
-			}
+			for (Edge e : n.getEdges ())
+					edges.add (e);
 		}
-		return edges;
+		Edge[] edgeArray = new Edge[edges.size ()];
+		edges.toArray (edgeArray);
+		return edgeArray;
 	}
-	
+	/* memory efficient node */
 	private class EdgeListNode {
-		
-		ArrayList<Edge> edges;
+
+		ArrayList<Edge> edges = new ArrayList<Edge> ();
 		int numTaken = 0;
 		int numAdded = 0;
-		
+
 		public void addEdge (Edge e){
-			Edge lastEdge = edges.get (numAdded);
-			if (e.getDistance () > lastEdge.getDistance ())
-				return;
-			edges.remove (numAdded);
+			if (edges.size () == NEIGHBOURS_SIZE){
+				Edge lastEdge = edges.get (numAdded-1);
+
+				if (lastEdge != null && e.getDistance () > lastEdge.getDistance ())
+					return;
+				edges.remove (numAdded-1);
+			}
 			edges.add (e);
 			Collections.sort (edges);
 			if (numAdded < NEIGHBOURS_SIZE-1)
 				numAdded++;
 		}
-		
+
 		public Edge getShortestEdge (){
 			numTaken++;
 			return edges.get (numTaken-1);
 		}
-		
+
+		public ArrayList<Edge> getEdges (){
+			return edges;
+		}
+
 	}
 }
