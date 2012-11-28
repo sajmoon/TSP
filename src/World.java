@@ -98,9 +98,10 @@ public class World {
 
 	public double getTotalDistance(int[] answer) {
 		double length = 0;
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size-1; i++) {
 			length += this.getDistanceTo(answer[i], answer[i+1]);
 		}
+		length += this.getDistanceTo(answer[answer.length-1], answer[0]);
 		return length;
 	}
 

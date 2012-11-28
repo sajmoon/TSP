@@ -147,10 +147,10 @@ public class TSP {
 		Graph g = algo.graphSolve(w);
 		Optimization o =  new twoOpt();
 		for (int i = 0; i < 100; i++) {
-			o.optimize(w, g);
+//			o.optimize(w, g);
 		}
 		
-		return algo.getAnswerAsArray(g);
+		return w.getAnswerAsArray(g);
 	}
 	
 	public static void printWorldDistance(int[] answer, World w) {

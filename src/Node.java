@@ -31,4 +31,28 @@ public class Node {
 		public int getID() {
 			return this.id;
 		}
+
+		public void clearEdges() {
+			edges = new ArrayList<Edge>();
+		}
+
+		/** 
+		 * Hittar en edge (from), och pekar om den till en ny nod (to)
+		 * @param from
+		 * @param to
+		 */
+		public void changeEdge(int from, int to) {
+			for (Edge e : edges){
+				if (e.to == e.from){
+					e.from = to;
+				}
+				if (e.to == from) {
+					if (e.from == from) {
+						e.from = to;
+					} else {
+						e.to = to;
+					}
+				}
+			}
+		}
 }
