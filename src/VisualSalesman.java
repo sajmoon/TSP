@@ -290,7 +290,12 @@ public class VisualSalesman extends JFrame{
 		drawnPositions = calculatePositions (w, heightFactor, widthFactor);
 		for (int i=0;i<w.getSize ();i++){
 			int x = drawnPositions[i][0]; int y = drawnPositions[i][1];
-			drawCityAt (x,y, widthFactor, heightFactor, "" + i + "");
+			if (w.size > 100) {
+				drawCityAt (x,y, widthFactor, heightFactor, "");
+			} else {
+				drawCityAt (x,y, widthFactor, heightFactor, "" + i + "");
+			}
+			
 
 		}
 		currentlyDrawnMap = name;
@@ -303,9 +308,10 @@ public class VisualSalesman extends JFrame{
 
 	private void drawCityAt (int x, int y, double xF, double yF, String name) {
 		if (!name.isEmpty()) {
-			g.drawString(name, x, y-10);
+			g.drawString(name, x, y);
+		} else {
+			g.drawOval (x, y, 3, 3);
 		}
-		g.drawOval (x, y, 3, 3);
 
 	}
 
