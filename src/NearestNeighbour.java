@@ -6,6 +6,7 @@ public class NearestNeighbour extends Algorithm {
 	boolean[] visited;
 	int size;
 	
+	@Override
 	public int[] solve(World w) {
 		this.w = w;
 		size = w.getSize ();
@@ -26,7 +27,6 @@ public class NearestNeighbour extends Algorithm {
 
 	@Override
 	public Graph graphSolve (World w) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

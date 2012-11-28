@@ -33,4 +33,10 @@ public class threeOpt implements Optimization {
 		return answer;
 		
 	}
+
+	@Override
+	public Graph optimize (World w, Graph g) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

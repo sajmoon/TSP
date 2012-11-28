@@ -8,7 +8,7 @@ import java.util.Collections;
  */
 public class Greedy extends Algorithm{
 
-	static final int NEIGHBOURS_SIZE = 100;
+	static final int NEIGHBOURS_SIZE = 500;
 
 	World w;
 	int size;
@@ -41,58 +41,65 @@ public class Greedy extends Algorithm{
 		}
 		return g;
 	}
-
 	public Edge[] addEdges (){
-		EdgeListNode[] nodes = new EdgeListNode[size];
-		
+		int numEdges = sumTo (size-1);
+		Edge[] edges = new Edge[numEdges];
+		int edgeIndex = 0;
 		for (int i=0;i<size;i++){
-			nodes[i] = new EdgeListNode ();
 			for (int j=0;j<i;j++){
 				Edge e = new Edge (i,j, w);
-				nodes[i].addEdge (e);
+				edges[edgeIndex] = e;
+				edgeIndex++;
 			}
 		}
-		ArrayList<Edge> edges = new ArrayList<Edge> ();
-		for (int i=0;i<size;i++){
-			EdgeListNode n = nodes[i];
-			for (Edge e : n.getEdges ())
-					edges.add (e);
-		}
-		
-		Edge[] edgeArray = new Edge[edges.size ()];
-		edges.toArray (edgeArray);
-		return edgeArray;
+		return edges;
 	}
+
+	private int sumTo (int num){
+		return ((num *(num+1)) / 2);
+	}
+	//	public Edge[] addEdges (){
+//		EdgeListNode[] nodes = new EdgeListNode[size];
+//		
+//		for (int i=0;i<size;i++){
+//			nodes[i] = new EdgeListNode ();
+//			for (int j=0;j<i;j++){
+//				Edge e = new Edge (i,j, w);
+//				nodes[i].addEdge (e);
+//			}
+//		}
+//		ArrayList<Edge> edges = new ArrayList<Edge> ();
+//		for (int i=0;i<size;i++){
+//			EdgeListNode n = nodes[i];
+//			for (Edge e : n.getEdges ())
+//					edges.add (e);
+//		}
+//		
+//		Edge[] edgeArray = new Edge[edges.size ()];
+//		edges.toArray (edgeArray);
+//		return edgeArray;
+//	}
 	
-	/* memory efficient node */
+	/* memory efficient node 
 	private class EdgeListNode {
 
 		ArrayList<Edge> edges = new ArrayList<Edge> ();
-		int numTaken = 0;
-		int numAdded = 0;
 
 		public void addEdge (Edge e){
 			if (edges.size () == NEIGHBOURS_SIZE){
-				Edge lastEdge = edges.get (numAdded-1);
+				Edge lastEdge = edges.get (edges.size ()-1);
 
 				if (lastEdge != null && e.getDistance () > lastEdge.getDistance ())
 					return;
-				edges.remove (numAdded-1);
+				edges.remove (edges.size ()-1);
 			}
 			edges.add (e);
 			Collections.sort (edges); //TODO Ska det göras varje gång?
-			if (numAdded < NEIGHBOURS_SIZE-1)
-				numAdded++;
-		}
-
-		public Edge getShortestEdge (){
-			numTaken++;
-			return edges.get (numTaken-1);
 		}
 
 		public ArrayList<Edge> getEdges (){
 			return edges;
 		}
 
-	}
+	}*/
 }

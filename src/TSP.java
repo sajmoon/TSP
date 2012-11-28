@@ -145,6 +145,8 @@ public class TSP {
 	
 	public static int[] solveForWorld (Algorithm algo, World w){
 		Graph g = algo.graphSolve(w);
+		if (g == null)
+			return algo.solve (w);
 		Optimization o =  new twoOpt();
 		for (int i = 0; i < 100; i++) {
 //			o.optimize(w, g);
