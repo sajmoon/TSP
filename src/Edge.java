@@ -15,10 +15,10 @@ public class Edge implements Comparable<Edge>{
 		@Override
 		public int compareTo (Edge o) {
 			double dist = getDistance ();
-			if (o.getDistance () > dist)
-				return 1;
-			if (dist > o.getDistance ())
+			if (o.getDistance () > dist)				
 				return -1;
+			if (dist > o.getDistance ())
+				return 1;
 			return 0;
 
 		}
