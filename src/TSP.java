@@ -34,7 +34,7 @@ public class TSP {
 
 		try{
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-//			BufferedReader in = new BufferedReader(new FileReader(new File("/indata.txt")));
+//			BufferedReader in = new BufferedReader(new FileReader(new File("testcases/15")));
 //			BufferedReader in = new BufferedReader(new FileReader(new File("C:\\indata.txt")));
 			/*
 			String inLine = in.readLine();
@@ -114,18 +114,17 @@ public class TSP {
 
 			World w = makeWorld (in);
 			
+			int[] answer = solveForWorld(algo, w);
+//			int[] answer = algo.solve(w);
 			
-			
-			int[] answer = algo.solve(w);
-			
-			Optimization opt = new twoOpt();
-//			TraversalGraph g = new TraversalGraph(answer, w);
-			
-			for (int i=0;i<5;i++){
-//				g = optimizeResult(opt, g, w);
-				answer = optimizeResult(opt, answer, w);
-			}
-			
+//			Optimization opt = new twoOpt();
+////			TraversalGraph g = new TraversalGraph(answer, w);
+//			
+//			for (int i=0;i<5;i++){
+////				g = optimizeResult(opt, g, w);
+//				answer = optimizeResult(opt, answer, w);
+//			}
+//			
 //			return g.toIntArray();
 			return answer;
 		} catch (Exception e){
@@ -145,7 +144,13 @@ public class TSP {
 	
 	
 	public static int[] solveForWorld (Algorithm algo, World w){
-		return algo.solve (w);
+		Graph g = algo.graphSolve(w);
+		Optimization o =  new twoOpt();
+		for (int i = 0; i < 100; i++) {
+			o.optimize(w, g);
+		}
+		
+		return algo.getAnswerAsArray(g);
 	}
 	
 	public static void printWorldDistance(int[] answer, World w) {

@@ -31,10 +31,12 @@ public class Greedy extends Algorithm{
 		int checkedEdges=0;
 		//Main loop
 		while (g.addedEdges < size){
+			// i denna loop stannar den sjuuuukt länge!!
+			// TODO: Varför? Den skapar en addEdge ungefär var 10 eller 20 gång. Tar sjukt långtid. Fast kanske ska vara så.
 			Edge cur = edges[checkedEdges];
-			//If it does not violate graph rules, then
+			// If it does not violate graph rules, then
 			g.addEdge (cur);
-			//			edges.remove (checkedEdges);
+			// edges.remove (checkedEdges);
 			checkedEdges++;
 		}
 		return g;
@@ -42,9 +44,9 @@ public class Greedy extends Algorithm{
 
 	public Edge[] addEdges (){
 		EdgeListNode[] nodes = new EdgeListNode[size];
-		for (int i=0;i<size;i++)
-			nodes[i] = new EdgeListNode ();
+		
 		for (int i=0;i<size;i++){
+			nodes[i] = new EdgeListNode ();
 			for (int j=0;j<i;j++){
 				Edge e = new Edge (i,j, w);
 				nodes[i].addEdge (e);
@@ -56,10 +58,12 @@ public class Greedy extends Algorithm{
 			for (Edge e : n.getEdges ())
 					edges.add (e);
 		}
+		
 		Edge[] edgeArray = new Edge[edges.size ()];
 		edges.toArray (edgeArray);
 		return edgeArray;
 	}
+	
 	/* memory efficient node */
 	private class EdgeListNode {
 
@@ -76,7 +80,7 @@ public class Greedy extends Algorithm{
 				edges.remove (numAdded-1);
 			}
 			edges.add (e);
-			Collections.sort (edges);
+			Collections.sort (edges); //TODO Ska det göras varje gång?
 			if (numAdded < NEIGHBOURS_SIZE-1)
 				numAdded++;
 		}

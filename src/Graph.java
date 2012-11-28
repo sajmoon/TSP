@@ -11,7 +11,7 @@ public class Graph {
 			size = soize;
 			nodes = new HashMap<Integer,Node> ();
 			for (int i=0;i<size;i++){
-				nodes.put (i, new Node ());
+				nodes.put (i, new Node (i));
 			}
 			
 		}

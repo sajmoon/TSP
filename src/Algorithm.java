@@ -8,6 +8,12 @@ public abstract class Algorithm {
 		return getAnswerAsArray (graphSolve (w));
 	}
 	
+	/**
+	 * Använd den i world istället.
+	 * @deprecated
+	 * @param g
+	 * @return
+	 */
 	public int[] getAnswerAsArray (Graph g){
 		int size = g.getSize ();
 		int[] ret = new int[size];
