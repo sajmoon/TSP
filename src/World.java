@@ -145,40 +145,40 @@ public class World {
 	}
 
 	public int getNearestCity (int city, boolean[] visited){
-//		double shortestDist = Double.MAX_VALUE;
-//		int nearest = 0;
-//		for (int i=0;i<size;i++){
-//			if (i == city)
-//				continue;
-//			double dist = matrix[city][i];
-//			if (dist < shortestDist && !visited[i]){
-//				shortestDist = dist;
-//				nearest = i;
-//			}
-//		}
-//		return nearest;
+		double shortestDist = Double.MAX_VALUE;
 		int nearest = 0;
-		for (int i = 0; i < size; i++) {
-			if (!visited[i]) {
+		for (int i=0;i<size;i++){
+			if (i == city)
+				continue;
+			double dist = matrix[city][i];
+			if (dist < shortestDist && !visited[i]){
+				shortestDist = dist;
 				nearest = i;
-				break;
 			}
-		}
-		if (nearest == 0) {
-			//backupplan om alla i neighbourlist är besökta.
-			double shortestDist = Double.MAX_VALUE;
-			for (int i=0;i<size;i++){
-				if (i == city)
-					continue;
-				double dist = matrix[city][i];
-				if (dist < shortestDist && !visited[i]){
-					shortestDist = dist;
-					nearest = i;
-				}
-			}
-			return nearest;
 		}
 		return nearest;
+//		int nearest = 0;
+//		for (int i = 0; i < size; i++) {
+//			if (!visited[i]) {
+//				nearest = i;
+//				break;
+//			}
+//		}
+//		if (nearest == 0) {
+//			//backupplan om alla i neighbourlist är besökta.
+//			double shortestDist = Double.MAX_VALUE;
+//			for (int i=0;i<size;i++){
+//				if (i == city)
+//					continue;
+//				double dist = matrix[city][i];
+//				if (dist < shortestDist && !visited[i]){
+//					shortestDist = dist;
+//					nearest = i;
+//				}
+//			}
+//			return nearest;
+//		}
+//		return nearest;
 	}
 
 	public double getDistanceTo (int from, int to){
