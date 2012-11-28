@@ -148,8 +148,8 @@ public class TSP {
 		if (g == null)
 			return algo.solve (w);
 		Optimization o =  new twoOpt();
-		for (int i = 0; i < 100; i++) {
-//			o.optimize(w, g);
+		for (int i = 0; i < 10; i++) {
+			g = o.optimize(w, g);
 		}
 		
 		return w.getAnswerAsArray(g);

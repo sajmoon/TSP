@@ -37,20 +37,21 @@ public class Node {
 		}
 
 		/** 
+		 * node 1 egde[ 5 1 ] [1 7]
+		 * 1.change(5, 9)
+		 * [9 1] [ 1 7]
 		 * Hittar en edge (from), och pekar om den till en ny nod (to)
 		 * @param from
 		 * @param to
 		 */
 		public void changeEdge(int from, int to) {
 			for (Edge e : edges){
-				if (e.to == e.from){
-					e.from = to;
-				}
-				if (e.to == from) {
+				if (e.to == from || e.from == from )  {
 					if (e.from == from) {
 						e.from = to;
 					} else {
 						e.to = to;
+						e.to = e.to;
 					}
 				}
 			}
