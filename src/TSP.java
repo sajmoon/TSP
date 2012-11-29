@@ -11,7 +11,7 @@ public class TSP {
 	
 
 	public static final Algorithm[] algorithms = {new NearestNeighbour(), new Greedy()};
-	public static final Optimization[] optimizations = {new Two_opt()};
+	public static final Optimization[] optimizations = {new Two_opt(), new RandomTwoOpt()};
 
 	/**
 	 * Sample input
@@ -143,10 +143,10 @@ public class TSP {
 		Graph g = algo.graphSolve(w);
 //		if (g == null)
 //			return algo.solve (w);
-		Optimization o =  new Two_opt();
-		for (int i = 0; i < 50; i++) {
-			g = o.optimize(w, g);
-		}
+//		Optimization o =  new Two_opt();
+//		for (int i = 0; i < 50; i++) {
+//			g = o.optimize(w, g);
+//		}
 		
 		return g;
 	}
