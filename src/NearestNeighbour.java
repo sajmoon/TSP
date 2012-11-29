@@ -7,26 +7,22 @@ public class NearestNeighbour extends Algorithm {
 	int size;
 	
 	@Override
-	public int[] solve(World w) {
+	public Graph graphSolve(World w) {
 		this.w = w;
 		size = w.getSize ();
 		visited = new boolean[size];
 		int[] ret = new int[size];
 		int numVisited = 0;
 		int currentCity = 0;
-		Graph g = new Graph (w.getSize ());
+		Graph g = new Graph (w.getSize (), w);
 		while (numVisited < size){
-			ret[numVisited] = currentCity;
 			visited[currentCity] = true;
-			currentCity = w.getNearestCity (currentCity, visited);
+			int nextCity = w.getNearestCity (currentCity, visited);
+			g.addEdge(currentCity, nextCity);
+			currentCity = nextCity;
 			numVisited++;
 		}
 		
-		return ret;
-	}
-
-	@Override
-	public Graph graphSolve (World w) {
-		return null;
+		return g;
 	}
 }

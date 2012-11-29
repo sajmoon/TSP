@@ -49,7 +49,7 @@ public class VisualSalesman extends JFrame{
 
 	World w;
 	GraphFile gf;
-	int[] answer;
+	Graph answer;
 	
 	String currentlyDrawnMap = "";
 	int[][] drawnPositions;
@@ -212,7 +212,7 @@ public class VisualSalesman extends JFrame{
 			w = TSP.makeWorld (new BufferedReader(new FileReader(gf.file)));
 			answer = TSP.solveForWorld (chosenAlgo, w);
 			long time = System.currentTimeMillis () - start;
-			drawAnswer (answer, w, gf.name, time);
+			drawAnswer (answer.toArray (), w, gf.name, time);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -224,8 +224,8 @@ public class VisualSalesman extends JFrame{
 //			TraversalGraph g = new TraversalGraph(answer, w);
 //			g = TSP.optimizeResult(opt, g, w);
 //			answer = g.toIntArray();
-			answer = TSP.optimizeResult(opt, answer, w);
-			drawAnswer (answer, w, gf.name, 80085);
+			answer = (TSP.optimizeResult(opt, answer, w));
+			drawAnswer (answer.toArray (), w, gf.name, 80085);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

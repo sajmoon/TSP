@@ -10,8 +10,8 @@ public class TSP {
 	public static long cutoffTime;
 	
 
-	public static final Algorithm[] algorithms = {new Greedy(), new Insertion(), new NearestNeighbour(), new RandomStupid ()};
-	public static final Optimization[] optimizations = { new twoOpt() };
+	public static final Algorithm[] algorithms = {new NearestNeighbour(), new Greedy()};
+	public static final Optimization[] optimizations = {new Two_opt()};
 
 	/**
 	 * Sample input
@@ -85,7 +85,7 @@ public class TSP {
 	public static void runSolverAndPrintToConsoleWithDistance (Algorithm algo, BufferedReader in){
 		try {
 			World w = makeWorld (in);
-			Utils.printAnswerAndDistance (solveForWorld(algo,w),w);
+			Utils.printAnswerAndDistance (solveForWorld(algo,w).toArray (),w);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -114,7 +114,7 @@ public class TSP {
 
 			World w = makeWorld (in);
 			
-			int[] answer = solveForWorld(algo, w);
+			Graph answer = solveForWorld(algo, w);
 //			int[] answer = algo.solve(w);
 			
 //			Optimization opt = new twoOpt();
@@ -126,33 +126,29 @@ public class TSP {
 //			}
 //			
 //			return g.toIntArray();
-			return answer;
+			return answer.toArray ();
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static int[] optimizeResult(Optimization opt, int[] g, World w) {
-		
-//		while ( (System.currentTimeMillis() - startTime) < cutoffTime ) {
-			g = opt.optimize(w, g, System.currentTimeMillis() - startTime);
-//		}
-		
+	public static Graph optimizeResult(Optimization opt, Graph g, World w) {
+		g = opt.optimize(w, g);
 		return g;
 	}
+
 	
-	
-	public static int[] solveForWorld (Algorithm algo, World w){
+	public static Graph solveForWorld (Algorithm algo, World w){
 		Graph g = algo.graphSolve(w);
-		if (g == null)
-			return algo.solve (w);
-		Optimization o =  new twoOpt();
-		for (int i = 0; i < 10; i++) {
+//		if (g == null)
+//			return algo.solve (w);
+		Optimization o =  new Two_opt();
+		for (int i = 0; i < 50; i++) {
 			g = o.optimize(w, g);
 		}
 		
-		return w.getAnswerAsArray(g);
+		return g;
 	}
 	
 	public static void printWorldDistance(int[] answer, World w) {

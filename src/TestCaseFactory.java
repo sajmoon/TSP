@@ -129,34 +129,18 @@ public class TestCaseFactory {
 		Random r = new Random ();
 		BufferedWriter out = new BufferedWriter (new FileWriter(gf.file));
 		out.write (""+gf.size+"\n");
-		int size = gf.size;
-		int clumpSize = 10;
-		if (size < 20)
-			clumpSize = 5;
-		if (size < 10)
-			clumpSize = 1;
-		int placedCities = 0;
-		for (int i=0;i<size;i+=clumpSize){
-			for (int j=0;j<clumpSize;j++,placedCities++){
-				double rand1 = r.nextDouble ();
-				double rand2 = r.nextDouble ();
-				double negative = 1;
-				if (r.nextInt (2) > 0)
-					negative = -1;
-				double x = (rand1*SCALE_FACTOR*size+i)*negative;
-				double y = (rand2*SCALE_FACTOR*size+i)*negative;
-				String coords = ""+x+" "+y+"\n";
-				out.write (coords);
-			}
-		}
-		int remainingCities = size - placedCities;
-		while (remainingCities > 0){
-			//Make own clump
-			double x = r.nextDouble ()*size*SCALE_FACTOR;
-			double y = r.nextDouble ()*size*SCALE_FACTOR;
+		for (int i=0;i<gf.size/2;i++){
+			double x = r.nextDouble ()*gf.size*SCALE_FACTOR;
+			double y = r.nextDouble ()*gf.size*SCALE_FACTOR;
 			String coords = ""+x+" "+y+"\n";
 			out.write (coords);
-			remainingCities--;
+		}
+		
+		for (int i=0;i<gf.size/2;i++){
+			double x = r.nextDouble ()*gf.size*SCALE_FACTOR*2;
+			double y = r.nextDouble ()*gf.size*SCALE_FACTOR*2;
+			String coords = ""+x+" "+y+"\n";
+			out.write (coords);
 		}
 		out.close ();
 	}

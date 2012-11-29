@@ -1,80 +1,74 @@
-import java.util.HashMap;
 
 public class Graph {
 
-		HashMap<Integer, Node> nodes;
-		public int addedEdges;
-		int size;
+	Node[] nodes;
 
-		public Graph (int soize){
-			//g'day
-			size = soize;
-			nodes = new HashMap<Integer,Node> ();
-			for (int i=0;i<size;i++){
-				nodes.put (i, new Node (i));
-			}
-			
-		}
-
-		public boolean addEdge(Edge e){
-			if (nodes.get (e.from).degree () > 1 || nodes.get (e.to).degree () > 1)
-				return false;
-			if (addedEdges+1 != size){
-				//We're not about to add the last edge, check for cycle
-				if (hasCycle (e))
-					return false;
-			}
-			nodes.get (e.from).addEdge (e);
-			nodes.get (e.to).addEdge (e.getReverse ());
-			addedEdges++;
-			return true;
-		}
-		public int getEdgeFrom (int from, int cameFrom){
-			Node n = nodes.get (from);
-			for (Edge e : n.getEdges ()){
-				if (e.to != cameFrom || cameFrom < 0)
-					return e.to;
-			}
-			return -1;
-		}
-
-		private boolean hasCycle (Edge e) {
-			if (nodes.get (e.from).degree () == 0 || nodes.get(e.to).degree () == 0)
-				return false;
-
-			Node n = nodes.get (e.to);
-			int visitedNodes = 0;
-			int last = e.from;
-			int cur = e.to;
-			while (n.degree () > 0 && visitedNodes < size){
-				Edge next = n.getEdgeExludeDestination (last);
-				if (next == null)
-					return false;
-				last = cur;
-				cur = next.to;
-				n = nodes.get (cur);
-				visitedNodes++;
-				if (cur == e.from && visitedNodes < size)
-					return true;
-			}
-			return false;
-		}
-
-		public String toString (){
-			StringBuilder sb = new StringBuilder ();
-			for (int i=0; i<size;i++){
-				Node n = nodes.get (i);
-				sb.append (n.getEdges ());
-			}
-			return sb.toString ();
-		}
-		
-		public Node getNode (int i){
-			return nodes.get (i);
-		}
-		
-		public int getSize (){
-			return size;
-		}
-
+	public Graph (int size, World w){
+		nodes = new Node[size];
+		for (int i=0;i<size;i++)
+			nodes[i] = new Node ();
 	}
+
+	public int getSize () {
+		return nodes.length;
+	}
+
+	public int getNext (int node){
+		return nodes[node].to;
+	}
+	
+	public int getPrev (int node){
+		return nodes[node].from;
+	}
+	public void addEdge (int from, int to) {
+		try {
+			nodes[from].to = to;
+			nodes[to].from = from;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static class Node{
+		int to;
+		int from;
+		
+		@Override
+		public String toString (){
+			return "("+from+","+to+")";
+		}
+		
+		public void reverse (){
+			int tmp = to;
+			to = from;
+			from = tmp;
+		}
+	}
+
+	public int[] toArray () {
+		int[] ret = new int[getSize ()];
+		int curNode = 0;
+		for (int i=0;i<getSize();i++){
+			ret[i] = curNode;
+			curNode = getNext (curNode);
+		}
+		return ret;
+	}
+
+	public void switchEdges (int node1, int node2, int node11, int node22) {
+		nodes[node1].to = node2;
+		nodes[node2].to = node1;
+		nodes[node11].from = node22;
+		nodes[node22].from = node11;
+		
+		reverse (node2, node11);
+	}
+
+	private void reverse (int from, int to) {
+		nodes[from].reverse ();
+		if (from == to)
+			return;
+		reverse (nodes[from].to, to);
+	}
+
+}

@@ -4,6 +4,8 @@ import java.util.Random;
 public class twoOpt implements Optimization {
 
 	public Graph optimize(World w, Graph g) {
+		return g;
+		/*
 		int x 		= -1;
 		int xnext 	= -1;
 		int y 		= -1;
@@ -12,17 +14,17 @@ public class twoOpt implements Optimization {
 		double bestLength = 0;
 		
 		for (int n = 0;n < w.size; n++) {
-			Node node = g.getNode (n);
+			GreedyNode greedyNode = g.getNode (n);
 			for (int i = n+1; i < w.size-1; i++) {
 				
 				double originalLength = 0;
-				int j = node.getID();
+				int j = greedyNode.getID();
 				
-				Edge a = node.getEdges().get(0);
+				Edge a = greedyNode.getEdges().get(0);
 				int nextj = a.to;
 				originalLength += w.getDistanceTo(j, nextj);
 				
-				Node node2 = g.getNode(i);
+				GreedyNode node2 = g.getNode(i);
 				
 				int k = node2.getID();
 
@@ -56,10 +58,10 @@ public class twoOpt implements Optimization {
 		// Hittat bästa bytet för denna nod.
 		if (x != -1) {
 			//Hittade ett byte som gör det bättre
-			Node one = g.getNode(x);
+			GreedyNode one = g.getNode(x);
 			one.changeEdge(xnext, y);
 			
-			Node two = g.getNode(y);
+			GreedyNode two = g.getNode(y);
 			two.changeEdge(ynext, x);
 			
 			Node three = g.getNode(xnext);
@@ -75,26 +77,28 @@ public class twoOpt implements Optimization {
 		}
 		
 //		
-//		// Do the switch
+//		// Do the switch+
 //		
 //		g.switchNodes(x,y);
 //		
 		
 		return g;
+		*/
 	}
 	
 	public int[] optimize(World w, int[] answer, long timeLeft) {
-		
-		Graph g = new Graph(answer.length);
-		
-		for (int i = 0; i < answer.length-1; i++) {
-			g.addEdge(new Edge(answer[i], answer[i+1], w));
-		}
-		
-		g.addEdge(new Edge(answer[answer.length-1], answer[0], w));
-		
-		g = optimize(w, g);
-		return w.getAnswerAsArray(g);
+		return null;
+//		
+//		Graph g = new Graph(answer.length);
+//		
+//		for (int i = 0; i < answer.length-1; i++) {
+//			g.addEdge(new Edge(answer[i], answer[i+1], w));
+//		}
+//		
+//		g.addEdge(new Edge(answer[answer.length-1], answer[0], w));
+//		
+//		g = optimize(w, g);
+//		return w.getAnswerAsArray(g);
 //		
 //		g.addEdge(e)
 //		int[] newAnswer = new int[answer.length];
