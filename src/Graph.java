@@ -78,8 +78,8 @@ public class Graph {
 		nodes[node3].to = node11;
 		
 		nodes[node22].from = node1;
-		nodes[node22].from = node2;
-		nodes[node22].from = node3;
+		nodes[node33].from = node2;
+		nodes[node11].from = node3;
 	}
 
 }
