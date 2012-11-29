@@ -20,6 +20,7 @@ public class Graph {
 	public int getPrev (int node){
 		return nodes[node].from;
 	}
+	
 	public void addEdge (int from, int to) {
 		try {
 			nodes[from].to = to;
@@ -69,6 +70,16 @@ public class Graph {
 		if (from == to)
 			return;
 		reverse (nodes[from].to, to);
+	}
+
+	public void treoptswitch(int node1, int node11, int node2, int node22, int node3, int node33) {
+		nodes[node1].to = node22;
+		nodes[node2].to = node33;
+		nodes[node3].to = node11;
+		
+		nodes[node22].from = node1;
+		nodes[node22].from = node2;
+		nodes[node22].from = node3;
 	}
 
 }
