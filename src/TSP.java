@@ -11,7 +11,7 @@ public class TSP {
 	
 
 	public static final Algorithm[] algorithms = {new NearestNeighbour(), new Greedy()};
-	public static final Optimization[] optimizations = {new Two_opt(), new RandomTwoOpt(), new TreOpt(), new Two_opt_bestgain()};
+	public static final Optimization[] optimizations = {new Two_opt(), new RandomTwoOpt(), new TreOpt(), new Two_opt_bestgain(), new TreOptRandom()};
 
 	/**
 	 * Sample input
