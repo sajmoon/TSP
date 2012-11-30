@@ -1,4 +1,3 @@
-import java.util.TreeSet;
 
 public class World {
 	double[][] positions;
@@ -45,6 +44,7 @@ public class World {
 		return (dx*dx) + (dy * dy);
 	}
 
+	/*
 	public void makeNeighbourList() {
 		for (int i = 0; i < size-1; i++) {
 			TreeSet<Triple> h = new TreeSet<Triple>();
@@ -63,6 +63,7 @@ public class World {
 			h.clear();
 		}
 	}
+	*/
 
 	public class Triple implements Comparable<Triple> {
 		public final int from;

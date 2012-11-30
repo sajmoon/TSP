@@ -3,10 +3,11 @@ public class Utils {
 
 	static final boolean DEBUG = true;
 
-	public static void printAnswer (int[] answer){
-		for (int i = 0; i < answer.length; i++) {
-			System.out.println (answer[i]);
-		}
+	public static void printAnswer (Graph answer){
+		System.out.println(answer);
+//		for (int i = 0; i < answer.length; i++) {
+//			System.out.println (answer[i]);
+//		}
 	}
 	
 	public static boolean answerHasDuplicates (int[] answer){
@@ -20,9 +21,9 @@ public class Utils {
 		return false;
 	}
 
-	public static double printAnswerAndDistance (int[] answer, World w){
+	public static double printAnswerAndDistance (Graph answer, World w){
 		printAnswer (answer);
-		double totalDistance = getAnswerDistance (answer, w);
+		double totalDistance = getAnswerDistance (answer.toArray(), w);
 		System.out.println ("Total distance: "+totalDistance);
 		return totalDistance;
 	}
@@ -42,7 +43,7 @@ public class Utils {
 		return totalDistance;
 	}
 
-	public static void printSolution(int[] answer, World w) {
+	public static void printSolution(Graph answer, World w) {
 		if(DEBUG){
 			printWorldPositions(w);
 			printWorldMatrix(w);

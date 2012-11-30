@@ -85,7 +85,7 @@ public class TSP {
 	public static void runSolverAndPrintToConsoleWithDistance (Algorithm algo, BufferedReader in){
 		try {
 			World w = makeWorld (in);
-			Utils.printAnswerAndDistance (solveForWorld(algo,w).toArray (),w);
+			Utils.printAnswerAndDistance (solveForWorld(algo,w),w);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -105,11 +105,11 @@ public class TSP {
 			w.add(Double.parseDouble(a[0]), Double.parseDouble(a[1]));
 		}
 		
-		w.makeNeighbourList();
+//		w.makeNeighbourList();
 		return w;
 	}
 	
-	public static int[] runSolver (Algorithm algo, BufferedReader in){
+	public static Graph runSolver (Algorithm algo, BufferedReader in){
 		try{
 
 			World w = makeWorld (in);
@@ -126,7 +126,7 @@ public class TSP {
 //			}
 //			
 //			return g.toIntArray();
-			return answer.toArray ();
+			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
 		}

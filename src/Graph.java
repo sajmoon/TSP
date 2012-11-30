@@ -21,6 +21,17 @@ public class Graph {
 		return nodes[node].from;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		int curNode = 0;
+		for (int i=0;i<getSize();i++){
+			sb.append(curNode);
+			sb.append("\n");
+			curNode = getNext (curNode);
+		}
+		return sb.toString();
+	}
+	
 	public void addEdge (int from, int to) {
 		try {
 			nodes[from].to = to;
