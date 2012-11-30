@@ -4,13 +4,8 @@ public class TreOpt implements Optimization {
 	@Override
 	public Graph optimize (World w, Graph g) {
 		Random r = new Random();
-		int cur = 0;
-		System.out.println(0);
-		while (cur != 0) {
-			System.out.println(cur);
-			cur = g.getNext(cur);
-			
-		}
+		
+		
 		int b1 = -1;
 		int b11 = -1;
 		int b2 = -1;
@@ -19,7 +14,7 @@ public class TreOpt implements Optimization {
 		int b33 = -1;
 		double best = 0;
 		
-		int LIMIT = w.size/4;
+		int LIMIT = w.size/3;
 		
 		int node1 = r.nextInt(g.getSize());
 		int node11 = g.getNext(node1);
@@ -73,7 +68,8 @@ public class TreOpt implements Optimization {
 		}
 		
 		if (best > 0 ) {
-			g.treoptswitch(b1, b11, b2, b22, b3, b33);
+			g.treOptSwitch(b1, b11, b2, b22, b3, b33);
+			
 		}
 		
 		
