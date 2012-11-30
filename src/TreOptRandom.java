@@ -10,6 +10,7 @@ public class TreOptRandom implements Optimization {
 		// Tex hålla koll på vilka kanter som är längst. 
 		// Säg de 10 längsta och sedan försöka byta dom.
 		
+		
 		Random r =  new Random();
 		int node1 = r.nextInt(g.getSize());
 		int node11 = g.getNext(node1);

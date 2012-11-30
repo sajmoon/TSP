@@ -111,21 +111,16 @@ public class TSP {
 	
 	public static Graph runSolver (Algorithm algo, BufferedReader in){
 		try{
-
 			World w = makeWorld (in);
 			
 			Graph answer = solveForWorld(algo, w);
-//			int[] answer = algo.solve(w);
 			
-//			Optimization opt = new twoOpt();
-////			TraversalGraph g = new TraversalGraph(answer, w);
-//			
+//			Optimization twoOpt = new twoOpt();
+//
 //			for (int i=0;i<5;i++){
-////				g = optimizeResult(opt, g, w);
-//				answer = optimizeResult(opt, answer, w);
+//				answer = optimizeResult(twoOpt, answer, w);
 //			}
-//			
-//			return g.toIntArray();
+
 			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
@@ -140,14 +135,28 @@ public class TSP {
 
 	
 	public static Graph solveForWorld (Algorithm algo, World w){
-		Graph g = algo.graphSolve(w);
-//		if (g == null)
-//			return algo.solve (w);
-//		Optimization o =  new Two_opt();
-//		for (int i = 0; i < 50; i++) {
-//			g = o.optimize(w, g);
-//		}
 		
+		Graph g = algo.graphSolve(w);
+
+		Optimization two =  new Two_opt();
+		Optimization tre =  new TreOpt();
+		Optimization random_two =  new RandomTwoOpt();
+		
+		for (int i = 0; i < 20; i++) {
+			g = two.optimize(w, g);
+		}
+//		
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		
+//		for (int i = 0; i < 40; i++) {
+//			g = two.optimize(w, g);
+//		}
+//		
 		return g;
 	}
 	
