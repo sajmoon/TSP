@@ -249,7 +249,7 @@ public class VisualSalesman extends JFrame{
 			distanceLabel.setText ("ANSWER HAS DUPLICATE");
 			distanceLabel.setForeground (frgnd);
 		}else{
-			Utils.printAnswer (answer);
+//			Utils.printAnswer (answer);
 			updateResultTexts (Utils.getAnswerDistance (answer, w), time);
 		}
 	}

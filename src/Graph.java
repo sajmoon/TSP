@@ -21,6 +21,17 @@ public class Graph {
 		return nodes[node].from;
 	}
 	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		int curNode = 0;
+		for (int i=0;i<getSize();i++){
+			sb.append(curNode);
+			sb.append("\n");
+			curNode = getNext (curNode);
+		}
+		return sb.toString();
+	}
+	
 	public void addEdge (int from, int to) {
 		try {
 			nodes[from].to = to;
@@ -72,7 +83,7 @@ public class Graph {
 		reverse (nodes[from].to, to);
 	}
 
-	public void treoptswitch(int node1, int node11, int node2, int node22, int node3, int node33) {
+	public void treOptSwitch(int node1, int node11, int node2, int node22, int node3, int node33) {
 		nodes[node1].to = node22;
 		nodes[node2].to = node33;
 		nodes[node3].to = node11;
@@ -81,5 +92,32 @@ public class Graph {
 		nodes[node33].from = node2;
 		nodes[node11].from = node3;
 	}
-
+	
+	public void undoTreOptSwitch(int node1, int node11, int node2, int node22, int node3, int node33) {
+		nodes[node1].to = node11;
+		nodes[node2].to = node22;
+		nodes[node3].to = node33;
+		
+		nodes[node11].from = node1;
+		nodes[node22].from = node2;
+		nodes[node33].from = node3;
+	}
+	
+	public boolean hasCycle() {
+		int startNode = 0;
+		int curNode = getNext(startNode);
+		int visitedNodes = 1;
+		while (visitedNodes < getSize()) {
+			if (curNode == startNode)
+				return true;
+			curNode = getNext(curNode);
+			visitedNodes++;
+		}
+		
+		if (curNode != startNode)
+			return true;
+		
+		return false;
+		
+	}
 }

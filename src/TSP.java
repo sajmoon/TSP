@@ -50,7 +50,7 @@ public class TSP {
 	 * @param in
 	 */
 	public static void runSolverAndPrintToConsole (Algorithm algo, BufferedReader in){
-		Utils.printAnswer (runSolver(algo,in));
+		Utils.printAnswer (runSolver(algo,in).toArray ());
 	}
 	
 	public static void runSolverAndPrintToConsoleWithDistance (Algorithm algo, BufferedReader in){
@@ -76,17 +76,23 @@ public class TSP {
 			w.add(Double.parseDouble(a[0]), Double.parseDouble(a[1]));
 		}
 		
-		w.makeNeighbourList();
+//		w.makeNeighbourList();
 		return w;
 	}
 	
-	public static int[] runSolver (Algorithm algo, BufferedReader in){
+	public static Graph runSolver (Algorithm algo, BufferedReader in){
 		try{
-
 			World w = makeWorld (in);
 			
 			Graph answer = solveForWorld(algo, w);
-			return answer.toArray ();
+			
+//			Optimization twoOpt = new twoOpt();
+//
+//			for (int i=0;i<5;i++){
+//				answer = optimizeResult(twoOpt, answer, w);
+//			}
+
+			return answer;
 		} catch (Exception e){
 			e.printStackTrace();
 		}
@@ -100,11 +106,32 @@ public class TSP {
 
 	
 	public static Graph solveForWorld (Algorithm algo, World w){
+		
 		Graph g = algo.graphSolve(w);
 		Optimization o =  new Two_opt();
 		for (int i = 0; i < 10; i++) {
 			g = o.optimize(w, g);
 		}
+
+		Optimization two =  new Two_opt();
+		Optimization tre =  new TreOpt();
+		Optimization random_two =  new RandomTwoOpt();
+		
+		for (int i = 0; i < 20; i++) {
+			g = two.optimize(w, g);
+		}
+//		
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		g = tre.optimize(w, g);
+//		
+//		for (int i = 0; i < 40; i++) {
+//			g = two.optimize(w, g);
+//		}
+//		
 		return g;
 	}
 	
