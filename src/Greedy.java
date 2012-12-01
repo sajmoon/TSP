@@ -18,6 +18,15 @@ public class Greedy extends Algorithm{
 
 	@Override
 	public Graph graphSolve (World w) {
+		if (w.size == 1){
+			return new Graph (w.size, w);
+		}
+		if (w.size == 2){
+			Graph grap = new Graph (w.size, w);
+			grap.addEdge (0, 1);
+			grap.addEdge (1, 0);
+			return grap;
+		}
 		this.w = w;
 		this.size = w.getSize ();
 		width = w.getWidth ();
@@ -28,21 +37,32 @@ public class Greedy extends Algorithm{
 	}
 
 	public Graph createSolutionGraph (Edge[] edges){
-		return null;
-//		Graph g = new GreedyGraph (size);
-//		int checkedEdges=0;
-//		//Main loop
-//		while (g.addedEdges < size){
-//			// i denna loop stannar den sjuuuukt länge!!
-//			// TODO: Varför? Den skapar en addEdge ungefär var 10 eller 20 gång. Tar sjukt långtid. Fast kanske ska vara så.
-//			Edge cur = edges[checkedEdges];
-//			// If it does not violate graph rules, then
-//			g.addEdge (cur.from, cur.to);
-//			// edges.remove (checkedEdges);
-//			checkedEdges++;
-//		}
-//		return g;
+		GreedyGraph g = new GreedyGraph (size);
+		int checkedEdges=0;
+		//Main loop
+		while (g.addedEdges < size){
+			// i denna loop stannar den sjuuuukt länge!!
+			// TODO: Varför? Den skapar en addEdge ungefär var 10 eller 20 gång. Tar sjukt långtid. Fast kanske ska vara så.
+			Edge cur = edges[checkedEdges];
+			// If it does not violate graph rules, then
+			g.addEdge (cur);
+			// edges.remove (checkedEdges);
+			checkedEdges++;
+		}
+		Graph gr = new Graph (size, w);
+		int lastEdge = 0;
+		int curEdge = g.getEdgeFrom (0, -1);
+		gr.addEdge (0, curEdge);
+		for (int i=1;i<size;i++){
+			int tmpCur = curEdge;
+			curEdge = g.getEdgeFrom (curEdge, lastEdge);
+			gr.addEdge (tmpCur, curEdge);
+			lastEdge = tmpCur;
+		}
+		return gr;
 	}
+
+	
 	public Edge[] addEdges (){
 		int numEdges = sumTo (size-1);
 		Edge[] edges = new Edge[numEdges];
