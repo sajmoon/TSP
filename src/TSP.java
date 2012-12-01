@@ -50,13 +50,13 @@ public class TSP {
 	 * @param in
 	 */
 	public static void runSolverAndPrintToConsole (Algorithm algo, BufferedReader in){
-		Utils.printAnswer (runSolver(algo,in).toArray ());
+		Utils.printAnswer (runSolver(algo,in));
 	}
 	
 	public static void runSolverAndPrintToConsoleWithDistance (Algorithm algo, BufferedReader in){
 		try {
 			World w = makeWorld (in);
-			Utils.printAnswerAndDistance (solveForWorld(algo,w).toArray (),w);
+			Utils.printAnswerAndDistance (solveForWorld(algo,w),w);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
