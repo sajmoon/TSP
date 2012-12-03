@@ -41,7 +41,7 @@ public class World {
 	private double calculateDistance(int p1, int p2) {
 		double dx = positions[p1][0] - positions[p2][0];
 		double dy = positions[p1][1] - positions[p2][1];
-		return Math.sqrt ((dx*dx) + (dy * dy));
+		return (dx*dx) + (dy * dy);
 	}
 
 	/*
