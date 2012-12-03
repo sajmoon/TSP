@@ -9,8 +9,8 @@ public class Two_opt_bestgain implements Optimization{
 		int n22 = -1;
 		double bestImprovement = 0;
 		
-		for (int node1=0;node1<w.size;node1++){
-			for (int node2=node1+1;node2<w.size;node2++){
+		for (int node1 = 0;node1 < w.size-1; node1++){
+			for (int node2 = node1 + 1; node2 < w.size-2; node2++){
 				int node11 = g.getNext (node1);
 				int node22 = g.getNext (node2);
 				
@@ -33,10 +33,8 @@ public class Two_opt_bestgain implements Optimization{
 			}
 		}
 		
-		g.switchEdges (n1, n2, n11, n22);
+		if (n1 != -1) 
+			g.switchEdges (n1, n2, n11, n22);
 		return g;
-	}
-	
-	
-
+	} 
 }

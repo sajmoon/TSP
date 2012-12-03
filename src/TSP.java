@@ -141,15 +141,29 @@ public class TSP {
 		Optimization two =  new Two_opt();
 		Optimization tre =  new TreOpt();
 		Optimization random_two =  new RandomTwoOpt();
+		Optimization best_two =  new Two_opt_bestgain();
+		
+		for (int i = 0; i < 10; i++) {
+			g = best_two.optimize(w, g);
+		}
+		
+		for (int i = 0; i < 7; i++) {
+			g = tre.optimize(w, g);
+		}
+		
+		for (int i = 0; i < 15; i++) {
+			g = best_two.optimize(w, g);
+		}
+		
+		for (int i = 0; i < 3; i++) {
+			g = tre.optimize(w, g);
+		}
 		
 		for (int i = 0; i < 20; i++) {
 			g = two.optimize(w, g);
 		}
 //		
-//		g = tre.optimize(w, g);
-//		g = tre.optimize(w, g);
-//		g = tre.optimize(w, g);
-//		g = tre.optimize(w, g);
+//		
 //		g = tre.optimize(w, g);
 //		g = tre.optimize(w, g);
 //		
