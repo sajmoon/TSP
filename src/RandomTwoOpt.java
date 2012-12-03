@@ -16,5 +16,9 @@ public class RandomTwoOpt  implements Optimization {
 			g.switchEdges (node1, node2, node11, node22);
 		return g;
 	}
+	
+	public String toString (){
+		return "Random 2-fuckt";
+	}
 
 }
