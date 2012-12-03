@@ -22,6 +22,10 @@ public class Two_opt implements Optimization{
 		return g;
 	}
 	
+	public String toString (){
+		return "2-opt";
+	}
+	
 	
 
 }

@@ -11,7 +11,7 @@ public class TSP {
 	
 
 	public static final Algorithm[] algorithms = {new NearestNeighbour(), new Greedy()};
-	public static final Optimization[] optimizations = {new Two_opt(), new RandomTwoOpt(), new TreOpt(), new Two_opt_bestgain(), new TreOptRandom()};
+	public static final Optimization[] optimizations = {new Two_opt(), new RandomTwoOpt(), new TreOpt(), new Two_opt_bestgain()};
 
 	/**
 	 * Sample input
@@ -34,35 +34,6 @@ public class TSP {
 
 		try{
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-//			BufferedReader in = new BufferedReader(new FileReader(new File("testcases/15")));
-//			BufferedReader in = new BufferedReader(new FileReader(new File("C:\\indata.txt")));
-			/*
-			String inLine = in.readLine();
-			int size = Integer.parseInt(inLine);
-			
-			World w = new World(size);
-			
-			while (in.ready()) {
-				String s = in.readLine();
-				String[] a = s.split(" ");
-				
-				w.add(Double.parseDouble(a[0]), Double.parseDouble(a[1]));
-			}
-
-			Algorithm algo = new NearestNeighbour();
-			int[] answer = algo.solve(w);
-//			printWorldDistance(answer, w);
-			Optimization opt = new twoOpt();
-//			System.out.println("After optimizations");
-			int i = 0;
-			while ( (System.currentTimeMillis() - startTime) < cuttOfTime ) {
-				i++;
-				answer = opt.optimize(w, answer, System.currentTimeMillis() - startTime);
-			}
-//			System.out.println("time left: " + (i));
-//			printWorldDistance(answer, w);
-//			w.printSolution(answer);
-			*/
 			runWithDefinedInput (in);
 		} catch(Exception e){
 		}
@@ -137,6 +108,10 @@ public class TSP {
 	public static Graph solveForWorld (Algorithm algo, World w){
 		
 		Graph g = algo.graphSolve(w);
+		Optimization o =  new Two_opt();
+		for (int i = 0; i < 10; i++) {
+			g = o.optimize(w, g);
+		}
 
 		Optimization two =  new Two_opt();
 		Optimization tre =  new TreOpt();
