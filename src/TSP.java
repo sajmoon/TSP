@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 
 public class TSP {
 	public static long startTime;
-	public static long cutoffTime;
+	public static final long cutoffTime = 1200;
 	
 
-	public static final Algorithm[] algorithms = {new NearestNeighbour(), new Greedy()};
+	public static final Algorithm[] algorithms = {new Greedy(), new NearestNeighbour()};
 	public static final Optimization[] optimizations = {new Two_opt(), new RandomTwoOpt(), new TreOpt(), new Two_opt_bestgain(), new TreOptRandom()};
 
 	/**
@@ -29,9 +29,6 @@ public class TSP {
 	 */
 	public static void main(String[] args) {
 		// TODO Krama Jens
-		startTime = System.currentTimeMillis();
-		cutoffTime = 1800;
-
 		try{
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 //			BufferedReader in = new BufferedReader(new FileReader(new File("testcases/15")));
@@ -135,43 +132,51 @@ public class TSP {
 
 	
 	public static Graph solveForWorld (Algorithm algo, World w){
-		
+		if (w.size < 3){
+			return new Graph (w.size,w);
+		}
+		startTime = System.currentTimeMillis ();
 		Graph g = algo.graphSolve(w);
-
 		Optimization two =  new Two_opt();
 		Optimization tre =  new TreOpt();
 		Optimization random_two =  new RandomTwoOpt();
 		Optimization best_two =  new Two_opt_bestgain();
-		
-		for (int i = 0; i < 10; i++) {
-			g = best_two.optimize(w, g);
-		}
-		
-		for (int i = 0; i < 7; i++) {
-			g = tre.optimize(w, g);
-		}
-		
-		for (int i = 0; i < 15; i++) {
-			g = best_two.optimize(w, g);
-		}
-		
-		for (int i = 0; i < 3; i++) {
-			g = tre.optimize(w, g);
-		}
-		
-		for (int i = 0; i < 20; i++) {
+		for (int i=0;i<2;i++)
 			g = two.optimize(w, g);
+		for (int i=0;i<4;i++)
+			g = random_two.optimize(w, g);
+		for (int i=0;i<100;i++)
+			g = tre.optimize(w, g);
+		while (System.currentTimeMillis ()-startTime < cutoffTime ){
+			g = best_two.optimize(w, g);
 		}
+		return g;
 //		
-//		
-//		g = tre.optimize(w, g);
-//		g = tre.optimize(w, g);
-//		
-//		for (int i = 0; i < 40; i++) {
-//			g = two.optimize(w, g);
+//		for (int i = 0; i < 3; i++) {
+//			g = tre.optimize(w, g);
 //		}
 //		
-		return g;
+//		for (int i = 0; i < 4; i++) {
+//			g = best_two.optimize(w, g);
+//		}
+//		
+//		for (int i = 0; i < 2; i++) {
+//			g = tre.optimize(w, g);
+//		}
+//		
+//		for (int i = 0; i < 10; i++) {
+//			g = two.optimize(w, g);
+//		}
+////		
+////		
+////		g = tre.optimize(w, g);
+////		g = tre.optimize(w, g);
+////		
+////		for (int i = 0; i < 40; i++) {
+////			g = two.optimize(w, g);
+////		}
+////		
+//		return g;
 	}
 	
 	public static void printWorldDistance(int[] answer, World w) {

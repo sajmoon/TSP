@@ -129,16 +129,16 @@ public class TestCaseFactory {
 		Random r = new Random ();
 		BufferedWriter out = new BufferedWriter (new FileWriter(gf.file));
 		out.write (""+gf.size+"\n");
-		for (int i=0;i<gf.size/2;i++){
-			double x = r.nextDouble ()*gf.size*SCALE_FACTOR;
-			double y = r.nextDouble ()*gf.size*SCALE_FACTOR;
-			String coords = ""+x+" "+y+"\n";
-			out.write (coords);
-		}
-		
-		for (int i=0;i<gf.size/2;i++){
-			double x = r.nextDouble ()*gf.size*SCALE_FACTOR*2;
-			double y = r.nextDouble ()*gf.size*SCALE_FACTOR*2;
+		double yTerm = 0;
+		double y = 0;
+		for (int i=0;i<gf.size;i++){
+			if (i % 50 == 0){
+				yTerm += 2;
+				y = yTerm;
+			} else{
+				y =0;
+			}
+			double x = gf.size*SCALE_FACTOR;
 			String coords = ""+x+" "+y+"\n";
 			out.write (coords);
 		}
